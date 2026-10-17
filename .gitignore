@@ -1,0 +1,26 @@
+# macOS
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+Icon?
+
+# Editor / IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# Python (tools/gen_roadmap.py)
+__pycache__/
+*.py[cod]
+.venv/
+venv/
+
+# Build artifacts từ labs C++ (tuần 1–12 trong roadmap)
+# Lưu ý: file nguồn .cpp/.h và kết quả benchmark (csv) vẫn được commit.
+labs/**/build/
+labs/**/*.dSYM/
+labs/**/a.out
+labs/**/*.o
