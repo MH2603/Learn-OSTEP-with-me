@@ -1,7 +1,8 @@
 # OSTEP Learning Tracker
 
 Website tĩnh (1 trang) để theo dõi tiến độ học **Operating Systems: Three Easy Pieces** theo
-lộ trình 12 tuần trong [`Doc/OS_Learning_Roadmap_Graphics_Programmer.md`](Doc/OS_Learning_Roadmap_Graphics_Programmer.md).
+lộ trình 12 module trong [`Doc/OS_Learning_Roadmap_Graphics_Programmer.md`](Doc/OS_Learning_Roadmap_Graphics_Programmer.md),
+triển khai trên lịch **20 tuần**.
 
 Toàn bộ website nằm trong thư mục [`web/`](web/). Không cần cài đặt gì: HTML + CSS + JS thuần,
 dữ liệu tiến độ lưu trong `localStorage` của trình duyệt.
@@ -19,13 +20,13 @@ Chạy server **từ thư mục gốc** (không phải từ trong `web/`) để 
 
 ## Có gì trong bản này
 
-- **Kế hoạch theo ngày**: [`Doc/OS_Learning_Daily_Plan_12_Weeks.md`](Doc/OS_Learning_Daily_Plan_12_Weeks.md) —
-  9h/tuần (1h các ngày trong tuần, 2h Thứ 7, 2h Chủ nhật), chia việc cụ thể cho từng ngày của cả 12 tuần.
-  Website đọc trực tiếp file này và hiển thị thành 84 task ngày.
+- **Kế hoạch theo ngày**: [`Doc/OS_Learning_Daily_Plan.md`](Doc/OS_Learning_Daily_Plan.md) —
+  9h/tuần (1h các ngày trong tuần, 2h Thứ 7, 2h Chủ nhật) trên **20 tuần**, chia việc cụ thể cho từng ngày.
+  Website đọc trực tiếp file này và hiển thị thành **140 task ngày** (12 module, mỗi module 1–2 tuần lịch).
 - **Hôm nay**: dashboard luôn mở đầu bằng việc của hôm nay (theo thứ trong tuần + tuần hiện tại),
   kèm "Xong khi…" và checkbox để tick.
-- **Dashboard**: % tiêu chí, tuần đã xong, số ngày đã xong (x/84), giờ đã hoàn thành theo kế hoạch (x/108h),
-  ngày bắt đầu có thể chỉnh, lưới 12 tuần, danh sách ngày còn lại của tuần hiện tại, checklist tổng kết sau 12 tuần.
+- **Dashboard**: % tiêu chí, tuần đã xong, số ngày đã xong (x/140), giờ đã hoàn thành theo kế hoạch (x/180h),
+  ngày bắt đầu có thể chỉnh, lưới 12 module (kèm tuần lịch của từng module), danh sách ngày còn lại của module hiện tại, checklist tổng kết.
 - **Week detail** (`#/week/w04`): kế hoạch 7 ngày (checkbox + phút + "xong khi") và deliverable của tuần,
   chương OSTEP kèm link PDF chính thức + PDF offline trong `Doc/`, checklist kiến thức / bài tập /
   yêu cầu (tuần 12) / tiêu chí hoàn thành, ô ghi chú tự lưu, callout "Liên hệ với game" và "Lưu ý".
@@ -36,15 +37,15 @@ Quy ước tiến độ:
 
 - **% của tuần (và % toàn khóa) = số tiêu chí hoàn thành / tổng tiêu chí** — đúng tinh thần
   "tiêu chí hoàn thành" của roadmap, không phải số checkbox bất kỳ.
-- **Task ngày** (84 task) đo mức độ đều đặn: tick khi làm xong việc của ngày đó; số giờ hoàn thành
+- **Task ngày** (140 task) đo mức độ đều đặn: tick khi làm xong việc của ngày đó; số giờ hoàn thành
   được tính từ phút của các ngày đã tick (60' ngày thường, 120' Thứ 7/CN).
 
 ## Cấu trúc
 
 ```
 Doc/                                           # tài liệu học (source of truth)
-├── OS_Learning_Roadmap_Graphics_Programmer.md  # lộ trình 12 tuần
-├── OS_Learning_Daily_Plan_12_Weeks.md          # kế hoạch từng ngày
+├── OS_Learning_Roadmap_Graphics_Programmer.md  # lộ trình 12 module
+├── OS_Learning_Daily_Plan.md                   # kế hoạch 20 tuần / 140 ngày
 └── Operating Systems - Three Easy Pieces.pdf   # sách offline
 README.md
 
@@ -59,8 +60,8 @@ web/                       # toàn bộ website
 `web/data/roadmap.json` được sinh từ chính hai file markdown — **doc là source of truth**:
 
 - `Doc/OS_Learning_Roadmap_Graphics_Programmer.md` → chương, kiến thức, bài tập, tiêu chí, liên hệ game;
-- `Doc/OS_Learning_Daily_Plan_12_Weeks.md` → bảng 7 ngày/tuần (phút, việc, "xong khi"), deliverable,
-  ghi chú "nếu kẹt/nếu dư", và ngân sách 9h/tuần · 108h.
+- `Doc/OS_Learning_Daily_Plan.md` → bảng ngày (`Tuần | Ngày | Phút | Việc | Xong khi`), deliverable,
+  ghi chú "nếu kẹt/nếu dư", bản đồ module → tuần lịch, và ngân sách 9h/tuần · 180h.
 
 Khi sửa một trong hai file, chạy lại:
 

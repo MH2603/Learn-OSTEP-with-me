@@ -139,13 +139,33 @@ function weeksDone() {
   return ROADMAP.weeks.filter((week) => weekProgress(week).pct === 100).length;
 }
 
-function currentWeekNumber() {
+function currentCalendarWeek() {
   const start = new Date(`${state.startDate}T00:00:00`);
   const now = new Date();
   now.setHours(0, 0, 0, 0);
   const days = Math.floor((now - start) / DAY_MS);
   if (!Number.isFinite(days) || days < 0) return 1;
-  return Math.min(ROADMAP.meta.weekCount, Math.floor(days / 7) + 1);
+  return Math.min(ROADMAP.meta.calendarWeeks, Math.floor(days / 7) + 1);
+}
+
+// Mỗi module chiếm 1–2 tuần lịch: [{week, startWeek, endWeek, span}, ...]
+function moduleRanges() {
+  let startWeek = 1;
+  return ROADMAP.weeks.map((week) => {
+    const span = (week.plan && week.plan.calendarWeeks) || 1;
+    const range = { week, startWeek, endWeek: startWeek + span - 1, span };
+    startWeek += span;
+    return range;
+  });
+}
+
+function currentModuleRange() {
+  const calendarWeek = currentCalendarWeek();
+  const ranges = moduleRanges();
+  return (
+    ranges.find((range) => calendarWeek >= range.startWeek && calendarWeek <= range.endWeek) ||
+    ranges[0]
+  );
 }
 
 function finalChecklistProgress() {
@@ -212,10 +232,13 @@ function todayDayName() {
 }
 
 function todayPlan() {
-  const week = ROADMAP.weeks.find((item) => item.number === currentWeekNumber());
-  if (!week) return null;
-  const day = weekDays(week).find((item) => item.day === todayDayName());
-  return day ? { week, day } : null;
+  const range = currentModuleRange();
+  if (!range) return null;
+  const offset = currentCalendarWeek() - range.startWeek + 1; // tuần thứ mấy trong module
+  const day = weekDays(range.week).find(
+    (item) => item.week === offset && item.day === todayDayName()
+  );
+  return day ? { week: range.week, day, range } : null;
 }
 
 function remainingDays(week) {
@@ -246,8 +269,10 @@ function renderTopbar() {
 function statusBadge(week) {
   const progress = weekProgress(week);
   if (progress.pct === 100) return '<span class="badge is-done">Đã xong</span>';
-  if (week.number === currentWeekNumber()) return '<span class="badge is-current">Tuần này</span>';
-  if (progress.tasksDone > 0) return '<span class="badge is-progress">Đang học</span>';
+  if (week.number === currentModuleRange().week.number) {
+    return '<span class="badge is-current">Đang học</span>';
+  }
+  if (progress.tasksDone > 0) return '<span class="badge is-progress">Đang dở</span>';
   return '<span class="badge">Chưa học</span>';
 }
 
@@ -259,11 +284,12 @@ function renderTodayCard() {
       <p class="today-task muted">Tuần này chưa có kế hoạch theo ngày. Mở tuần để xem checklist.</p>
     </section>`;
   }
-  const { week, day } = today;
+  const { week, day, range } = today;
   const done = !!state.done[day.id];
+  const absWeek = range.startWeek + day.week - 1;
   return `<section class="today-card ${done ? 'is-done' : ''}">
     <div class="today-head">
-      <span class="today-day">Hôm nay · ${esc(day.day)} · Tuần ${pad2(week.number)}</span>
+      <span class="today-day">Hôm nay · ${esc(day.day)} · Tuần ${absWeek}/${ROADMAP.meta.calendarWeeks} · Module ${week.number}</span>
       <span class="today-min">${minuteLabel(day)}</span>
     </div>
     <p class="today-task">${inline(day.task)}</p>
@@ -273,58 +299,65 @@ function renderTodayCard() {
         <input type="checkbox" data-task-id="${esc(day.id)}" ${done ? 'checked' : ''}>
         <span>Đánh dấu đã xong hôm nay</span>
       </label>
-      <a class="btn" href="#/week/${week.id}">Mở tuần ${pad2(week.number)} →</a>
+      <a class="btn" href="#/week/${week.id}">Mở Module ${week.number} →</a>
     </div>
   </section>`;
 }
 
 function renderDashboard() {
   const meta = ROADMAP.meta;
-  const current = currentWeekNumber();
-  const currentWeek = ROADMAP.weeks.find((week) => week.number === current) ?? ROADMAP.weeks[0];
+  const range = currentModuleRange();
+  const calendarWeek = currentCalendarWeek();
+  const currentWeek = range.week;
   const overall = overallProgress();
   const finalProgress = finalChecklistProgress();
   const plan = planTotals();
-  const weekPlan = dayProgress(currentWeek);
+  const modulePlan = dayProgress(currentWeek);
   const left = remainingDays(currentWeek);
   const subline = [meta.rhythmShort || meta.rhythm, `${meta.totalHours} giờ cả khóa`]
     .filter(Boolean)
     .join(' · ');
+  const weekRangeLabel =
+    range.span > 1 ? `Tuần ${range.startWeek}–${range.endWeek}` : `Tuần ${range.startWeek}`;
 
-  const weekCards = ROADMAP.weeks
-    .map((week) => {
+  const weekCards = moduleRanges()
+    .map(({ week, startWeek, endWeek, span }) => {
       const progress = weekProgress(week);
       const days = dayProgress(week);
       const status = statusBadge(week);
+      const rangeLabel = span > 1 ? `TUẦN ${startWeek}–${endWeek}` : `TUẦN ${startWeek}`;
       return `
         <a class="week-card ${progress.pct === 100 ? 'is-done' : ''}" href="#/week/${week.id}">
           <div class="week-card-head">
-            <span class="week-num">TUẦN ${pad2(week.number)}</span>
+            <span class="week-num">${rangeLabel}</span>
             ${status}
           </div>
           <h3>${esc(week.title)}</h3>
           <div class="bar"><span style="width:${progress.pct}%"></span></div>
-          <p class="muted small">${days.done}/${days.total} ngày · ${progress.critDone}/${progress.critTotal} tiêu chí</p>
+          <p class="muted small">Module ${week.number} · ${days.done}/${days.total} ngày · ${progress.critDone}/${progress.critTotal} tiêu chí</p>
         </a>`;
     })
     .join('');
 
+  const currentOffset = calendarWeek - range.startWeek + 1;
   const leftHtml = left.length
     ? `<ul class="day-list compact">${left
-        .map(
-          (day) => `
+        .map((day) => {
+          const absWeek = range.startWeek + day.week - 1;
+          const isToday = day.week === currentOffset && day.day === todayDayName();
+          return `
         <li>
-          <a class="day-row ${day.day === todayDayName() ? 'is-today' : ''}" href="#/week/${currentWeek.id}">
-            <span class="day-name">${esc(day.day)}</span>
+          <a class="day-row ${isToday ? 'is-today' : ''}" href="#/week/${currentWeek.id}">
+            <span class="day-name">T${absWeek} · ${esc(day.day)}</span>
             <span class="day-body">
               <span class="day-task">${inline(day.task)}</span>
             </span>
             <span class="task-week">${minuteLabel(day)}</span>
           </a>
-        </li>`
-        )
+        </li>`;
+        })
         .join('')}</ul>`
-    : '<p class="empty">Đã xong cả 7 ngày của tuần này. Sang tuần sau, hoặc dùng thời gian dư để viết glossary/báo cáo.</p>';
+    : `<p class="empty">Đã xong cả ${modulePlan.total} ngày của module này. Sang module sau, hoặc dùng thời gian dư để viết báo cáo.</p>`;
 
   const finalHtml = (ROADMAP.finalChecklist || [])
     .map(
@@ -347,11 +380,11 @@ function renderDashboard() {
   document.getElementById('app').innerHTML = `
     <section class="hero">
       <div>
-        <p class="eyebrow">Tuần hiện tại</p>
-        <h1>Tuần ${pad2(current)} · ${esc(currentWeek.title)}</h1>
+        <p class="eyebrow">Tuần ${calendarWeek}/${meta.calendarWeeks} · Module ${currentWeek.number}/${meta.weekCount} (chiếm ${weekRangeLabel.toLowerCase()})</p>
+        <h1>Module ${currentWeek.number} · ${esc(currentWeek.title)}</h1>
         <p class="hero-sub">${esc(meta.hoursPerWeek)} giờ/tuần · ${esc(subline)}</p>
         <div class="hero-actions">
-          <a class="btn btn-primary" href="#/week/${currentWeek.id}">Vào tuần ${pad2(current)}</a>
+          <a class="btn btn-primary" href="#/week/${currentWeek.id}">Vào module ${currentWeek.number}</a>
           <a class="btn" href="${esc(meta.ostepIndex)}" target="_blank" rel="noopener">OSTEP online ↗</a>
         </div>
       </div>
@@ -386,14 +419,14 @@ function renderDashboard() {
     </div>
 
     <div class="section-head">
-      <h2>12 tuần</h2>
+      <h2>12 module · ${meta.calendarWeeks} tuần</h2>
       <span class="muted small">Thanh tiến độ = tiêu chí hoàn thành</span>
     </div>
     <div class="week-grid">${weekCards}</div>
 
     <div class="section-head">
-      <h2>Còn lại trong tuần ${pad2(current)}</h2>
-      <span class="muted small">${weekPlan.done}/${weekPlan.total} ngày · ${formatNumber(weekHours(currentWeek).done)}h/${formatNumber(weekHours(currentWeek).total)}h</span>
+      <h2>Còn lại trong Module ${currentWeek.number} (${weekRangeLabel})</h2>
+      <span class="muted small">${modulePlan.done}/${modulePlan.total} ngày · ${formatNumber(weekHours(currentWeek).done)}h/${formatNumber(weekHours(currentWeek).total)}h</span>
     </div>
     ${leftHtml}
 
@@ -424,18 +457,28 @@ function checklistCard(title, items) {
     </section>`;
 }
 
-function dayList(week) {
+function dayList(week, range) {
   const days = weekDays(week);
   if (!days.length) return '';
-  const isCurrentWeek = week.number === currentWeekNumber();
   const today = todayDayName();
+  const calendarWeek = currentCalendarWeek();
+  const currentOffset = range ? calendarWeek - range.startWeek + 1 : 0;
+  let lastWeek = null;
   return `<ul class="day-list">${days
     .map((day) => {
       const done = !!state.done[day.id];
-      const todayClass = isCurrentWeek && day.day === today ? ' is-today' : '';
-      return `
+      const absWeek = range ? range.startWeek + day.week - 1 : day.week;
+      const isToday = day.week === currentOffset && day.day === today;
+      let header = '';
+      if (day.week !== lastWeek) {
+        lastWeek = day.week;
+        header = `<li class="day-week-label">Tuần ${absWeek}${
+          range && range.span > 1 ? ` · tuần ${day.week}/${range.span} của module` : ''
+        }</li>`;
+      }
+      return `${header}
       <li>
-        <label class="check day-row ${done ? 'is-done' : ''}${todayClass}">
+        <label class="check day-row ${done ? 'is-done' : ''}${isToday ? ' is-today' : ''}">
           <input type="checkbox" data-task-id="${esc(day.id)}" ${done ? 'checked' : ''}>
           <span class="day-body">
             <span class="day-line">
@@ -456,15 +499,18 @@ function renderWeek(week) {
   const progress = weekProgress(week);
   const days = dayProgress(week);
   const plan = week.plan || {};
+  const range = moduleRanges().find((item) => item.week.number === week.number);
+  const weekRangeLabel =
+    range.span > 1 ? `Tuần ${range.startWeek}–${range.endWeek}` : `Tuần ${range.startWeek}`;
   const index = ROADMAP.weeks.indexOf(week);
   const prev = ROADMAP.weeks[index - 1];
   const next = ROADMAP.weeks[index + 1];
 
-  const planCard = dayList(week)
+  const planCard = dayList(week, range)
     ? `<section class="card">
-        <h2>Kế hoạch 7 ngày</h2>
+        <h2>Kế hoạch ${plan.calendarWeeks > 1 ? `${plan.calendarWeeks} tuần` : "7 ngày"} (${plan.days.length} ngày · ${Math.round(plan.minutesTotal / 60)}h)</h2>
         ${plan.deliverable ? `<p class="deliverable"><span class="tag">DELIVERABLE</span> ${inline(plan.deliverable)}</p>` : ''}
-        ${dayList(week)}
+        ${dayList(week, range)}
         ${(plan.notes || [])
           .map(
             (note) => `<div class="callout is-warn">
@@ -515,9 +561,9 @@ function renderWeek(week) {
     : '';
 
   document.getElementById('app').innerHTML = `
-    <a class="back" href="#/">← Tất cả các tuần</a>
+    <a class="back" href="#/">← Tất cả module</a>
     <header class="week-head">
-      <p class="eyebrow">Tuần ${pad2(week.number)} / ${meta.weekCount}</p>
+      <p class="eyebrow">Module ${week.number} / ${meta.weekCount} · ${weekRangeLabel} (tuần ${currentCalendarWeek()}/${meta.calendarWeeks})</p>
       <h1>${esc(week.title)}</h1>
       <div class="week-meter">
         <div class="bar"><span id="weekDayBarFill" style="width:${days.pct}%"></span></div>

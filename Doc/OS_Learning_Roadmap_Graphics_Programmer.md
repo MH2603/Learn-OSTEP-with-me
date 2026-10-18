@@ -1,13 +1,14 @@
 # Lộ trình học Operating Systems cho Graphics Programmer / Rendering Engineer
 
-**Thời lượng:** 12 tuần  
-**Khối lượng:** 5–7 giờ/tuần (mục tiêu lập kế hoạch: khoảng 6 giờ/tuần)  
+**Thời lượng:** 12 module nội dung · lịch triển khai thực tế **20 tuần**  
+**Khối lượng:** 9 giờ/tuần (1h/ngày T2–T6, 2h T7, 2h CN) → **180 giờ**  
+**Lịch chi tiết theo ngày:** [`OS_Learning_Daily_Plan.md`](OS_Learning_Daily_Plan.md)  
 **Nền tảng hiện tại:** Có thể đọc và viết C/C++, nhưng chưa hiểu sâu internals  
 **Định hướng:** Graphics Programmer / Rendering Engineer
 
 ## 1. Mục tiêu
 
-Sau 12 tuần, mục tiêu là có thể:
+Sau lộ trình (12 module · 20 tuần), mục tiêu là có thể:
 
 - Giải thích các khái niệm OS ảnh hưởng trực tiếp đến hiệu năng game engine.
 - Hiểu process, virtual memory, allocation, CPU cache, scheduling, threading, synchronization và I/O.
@@ -15,7 +16,7 @@ Sau 12 tuần, mục tiêu là có thể:
 - Dùng profiler để tìm bottleneck và giải thích kết quả dựa trên số liệu.
 - Liên hệ kiến thức OS với CPU-side rendering, asset loading, render thread và GPU command submission.
 
-Đây là lộ trình xây dựng nền tảng, không nhằm đào tạo kernel developer trong 12 tuần.
+Đây là lộ trình xây dựng nền tảng, không nhằm đào tạo kernel developer trong 20 tuần.
 
 ## 2. Tài liệu chính
 
@@ -37,17 +38,19 @@ Sau 12 tuần, mục tiêu là có thể:
 
 ## 3. Nhịp học hằng tuần
 
-Mục tiêu khoảng 6 giờ mỗi tuần:
+**9 giờ mỗi tuần** (đã điều chỉnh sau khi đo thực tế — đọc chương cần nhiều thời gian hơn dự kiến):
 
-- **2 giờ:** Đọc lý thuyết và ghi chú các khái niệm chính.
-- **3 giờ:** Viết code, chạy thí nghiệm và đo kết quả.
-- **1 giờ:** Tổng kết, giải thích lại bằng lời của mình và liên hệ với game engine.
+- **Thứ 2 → Thứ 5 (4h):** Đọc lý thuyết từng phần nhỏ, ghi note ngay trong buổi.
+- **Thứ 6 (1h):** 1 drill code duy nhất trong tuần (30–60 dòng).
+- **Thứ 7 (2h):** Lab của module — viết, chạy, đo.
+- **Chủ nhật (2h):** 1h chốt số liệu/bảng + 1h write-up ngắn và tick tiêu chí (giờ thứ hai là buffer).
 
-Khi benchmark, hãy ưu tiên build Release, giữ workload nhất quán, chạy nhiều lần và ghi lại môi trường thực nghiệm. Không kết luận nguyên nhân chỉ từ một lần đo.
+Đã bỏ glossary và drill thứ hai để dành thời gian cho đọc và viết note. Khi benchmark, hãy ưu tiên build Release,
+giữ workload nhất quán, chạy nhiều lần và ghi lại môi trường thực nghiệm. Không kết luận nguyên nhân chỉ từ một lần đo.
 
 ---
 
-## 4. Kế hoạch 12 tuần
+## 4. 12 module nội dung (map sang 20 tuần ở `OS_Learning_Daily_Plan.md`)
 
 ### Tuần 1 — Chương trình và process
 
@@ -354,7 +357,7 @@ Khi benchmark, hãy ưu tiên build Release, giữ workload nhất quán, chạy
 
 Không cần dùng tất cả ngay từ đầu. Một compiler, một profiler và bộ benchmark được kiểm soát tốt là đủ để bắt đầu.
 
-## 6. Checklist đánh giá sau 12 tuần
+## 6. Checklist đánh giá sau lộ trình
 
 ### Memory
 - [ ] Giải thích virtual memory, paging và page fault.
@@ -372,9 +375,9 @@ Không cần dùng tất cả ngay từ đầu. Một compiler, một profiler v
 - [ ] Giải thích mối liên hệ giữa CPU scheduling, cache và render workload.
 - [ ] Nêu được giới hạn khi áp dụng benchmark C++ sang Unity hoặc renderer thực tế.
 
-Mục tiêu sau 12 tuần là giải thích được cơ chế, tự viết thí nghiệm và đọc kết quả profiler. Không cần tự viết kernel hay nhớ chi tiết mọi thuật toán scheduling.
+Mục tiêu sau lộ trình là giải thích được cơ chế, tự viết thí nghiệm và đọc kết quả profiler. Không cần tự viết kernel hay nhớ chi tiết mọi thuật toán scheduling.
 
-## 7. Sau 12 tuần nên học gì tiếp?
+## 7. Sau lộ trình nên học gì tiếp?
 
 ### A. Computer Architecture & Performance
 - Cache coherence, SIMD, branch prediction và memory ordering.
@@ -400,4 +403,4 @@ Mục tiêu sau 12 tuần là giải thích được cơ chế, tự viết thí
 
 Các chương về advanced filesystem, RAID, distributed systems và kernel implementation có thể để sau, trừ khi công việc thực tế yêu cầu.
 
-Với 5–7 giờ mỗi tuần, sau 12 tuần bạn sẽ có nền tảng tốt hơn để bước vào computer architecture và GPU architecture — hai mảng quan trọng cho con đường Rendering Engineer.
+Với 9 giờ mỗi tuần trong 20 tuần, bạn sẽ có nền tảng tốt hơn để bước vào computer architecture và GPU architecture — hai mảng quan trọng cho con đường Rendering Engineer.

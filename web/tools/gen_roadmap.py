@@ -37,7 +37,7 @@ def pdf_href():
 
 
 SRC = find_doc("OS_Learning_Roadmap_Graphics_Programmer.md")
-PLAN_SRC = find_doc("OS_Learning_Daily_Plan_12_Weeks.md")
+PLAN_SRC = find_doc("OS_Learning_Daily_Plan.md")
 
 OSTEP_BASE = "https://pages.cs.wisc.edu/~remzi/OSTEP/"
 
@@ -211,14 +211,16 @@ def parse_final_checklist(lines):
 # Kế hoạch theo ngày (OS_Learning_Daily_Plan_12_Weeks.md)
 # --------------------------------------------------------------------------- #
 
+# | Tuần | Ngày | Phút | Việc | Xong khi |
 DAY_ROW = re.compile(
-    r"^\|\s*(Thứ\s*[2-7]|Chủ nhật)\s*\|\s*([^|]*?)\s*\|\s*([^|]*?)\s*\|\s*([^|]*?)\s*\|\s*$"
+    r"^\|\s*(\d+)\s*\|\s*(Thứ\s*[2-7]|Chủ nhật)\s*\|\s*([^|]*?)\s*\|"
+    r"\s*([^|]*?)\s*\|\s*([^|]*?)\s*\|\s*$"
 )
 BOLD_FIELD = re.compile(r"^\*\*(.+?):\*\*\s*(.*)$")
 
 
-def parse_plan_week(number, lines):
-    """Lấy bảng 7 ngày + deliverable + ghi chú 'nếu kẹt/nếu dư' của một tuần."""
+def parse_plan_module(number, lines):
+    """Lấy bảng ngày của một module: (tuần lịch tương đối, ngày, phút, việc, xong khi)."""
     week_id = f"w{number:02d}"
     deliverable = ""
     days = []
@@ -231,17 +233,18 @@ def parse_plan_week(number, lines):
 
         match = DAY_ROW.match(line)
         if match:
-            day_name = re.sub(r"\s+", " ", match.group(1)).strip()
-            minutes_cell = match.group(2)
+            day_name = re.sub(r"\s+", " ", match.group(2)).strip()
+            minutes_cell = match.group(3)
             minutes = sum(int(n) for n in re.findall(r"\d+", minutes_cell))
             days.append(
                 {
                     "id": f"{week_id}-d{len(days) + 1}",
+                    "week": int(match.group(1)),
                     "day": day_name,
                     "minutes": minutes,
                     "minutesLabel": re.sub(r"\s+", "", minutes_cell),
-                    "task": re.sub(r"\s+", " ", match.group(3)).strip(),
-                    "doneWhen": re.sub(r"\s+", " ", match.group(4)).strip(),
+                    "task": re.sub(r"\s+", " ", match.group(4)).strip(),
+                    "doneWhen": re.sub(r"\s+", " ", match.group(5)).strip(),
                 }
             )
             continue
@@ -249,10 +252,12 @@ def parse_plan_week(number, lines):
         if line.startswith("|"):  # header / separator của bảng
             continue
 
-        field = BOLD_FIELD.match(line)
+        field = re.search(r"\*\*Deliverable:\*\*\s*(.+)$", line)
         if field:
-            if field.group(1).strip().lower().startswith("deliverable"):
-                deliverable = field.group(2).strip()
+            deliverable = field.group(1).strip()
+            continue
+
+        if BOLD_FIELD.match(line):
             continue
 
         if line.startswith("*") and not line.startswith("**"):
@@ -262,11 +267,13 @@ def parse_plan_week(number, lines):
                 notes.append(re.sub(r"\s+", " ", note))
 
     total_minutes = sum(day["minutes"] for day in days)
+    calendar_weeks = len({day["week"] for day in days}) or 1
     return week_id, {
         "deliverable": deliverable,
+        "calendarWeeks": calendar_weeks,
         "days": days,
         "notes": notes,
-        "minutesPerWeek": total_minutes,
+        "minutesTotal": total_minutes,
     }
 
 
@@ -280,7 +287,9 @@ def parse_plan(path):
     text = path.read_text(encoding="utf-8")
     lines = text.splitlines()
 
-    budget = next((l for l in lines if l.strip().startswith("**Ngân sách thời gian:**")), "")
+    budget = next(
+        (l for l in lines if re.match(r"^\*\*Ngân sách( thời gian)?:\*\*", l.strip())), ""
+    )
     if budget:
         m = re.search(r"\*\*(\d+)h/tuần\*\*", budget)
         if m:
@@ -289,7 +298,7 @@ def parse_plan(path):
         if m:
             meta["totalHours"] = int(m.group(1))
         m = re.search(
-            r"\*\*Ngân sách thời gian:\*\*\s*(.+?)\s*→\s*\*\*\d+h/tuần\*\*", budget
+            r"\*\*Ngân sách(?: thời gian)?:\*\*\s*(.+?)\s*→\s*\*\*\d+h/tuần\*\*", budget
         )
         if m:
             rhythm = re.sub(r"\*\*(.+?)\*\*", r"\1", m.group(1)).strip()
@@ -302,10 +311,10 @@ def parse_plan(path):
                 .strip()
             )
 
-    indices = [i for i, l in enumerate(lines) if H3.match(l) and H3.match(l).group(1).startswith("Tuần ")]
+    indices = [i for i, l in enumerate(lines) if H3.match(l) and H3.match(l).group(1).startswith("Module ")]
     for pos, start in enumerate(indices):
         heading = H3.match(lines[start]).group(1)
-        m = re.match(r"Tuần\s+(\d+)", heading)
+        m = re.match(r"Module\s+(\d+)", heading)
         if not m:
             continue
         end = indices[pos + 1] if pos + 1 < len(indices) else len(lines)
@@ -314,7 +323,7 @@ def parse_plan(path):
             if H2.match(line):
                 break
             block.append(line)
-        week_id, plan = parse_plan_week(int(m.group(1)), block)
+        week_id, plan = parse_plan_module(int(m.group(1)), block)
         plans[week_id] = plan
 
     return plans, meta
@@ -354,9 +363,10 @@ def main():
         week = parse_week(int(m.group(1)), m.group(2), block)
         week["plan"] = plans.get(week["id"]) or {
             "deliverable": "",
+            "calendarWeeks": 1,
             "days": [],
             "notes": [],
-            "minutesPerWeek": 0,
+            "minutesTotal": 0,
         }
         weeks.append(week)
 
@@ -373,11 +383,13 @@ def main():
     if section_lines:
         final_checklist = parse_final_checklist(section_lines)
 
-    total_minutes = sum(week["plan"]["minutesPerWeek"] for week in weeks)
+    total_minutes = sum(week["plan"]["minutesTotal"] for week in weeks)
+    calendar_weeks = sum(week["plan"]["calendarWeeks"] for week in weeks)
     data = {
         "meta": {
             "title": title,
             "weekCount": len(weeks),
+            "calendarWeeks": calendar_weeks,
             "hoursPerWeek": hours_per_week,
             "totalHours": plan_meta.get("totalHours", round(total_minutes / 60)),
             "rhythm": plan_meta.get("rhythm", ""),
@@ -397,7 +409,7 @@ def main():
     OUT.write_text(json.dumps(data, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
     days = sum(len(week["plan"]["days"]) for week in weeks)
     print(
-        f"Wrote {OUT.relative_to(ROOT)} — {len(weeks)} tuần, {days} ngày, "
+        f"Wrote {OUT.relative_to(ROOT)} — {len(weeks)} module / {calendar_weeks} tuần lịch, {days} ngày, "
         f"{total_minutes / 60:.0f}h, {len(final_checklist)} nhóm checklist cuối."
     )
 

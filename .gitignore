@@ -24,3 +24,7 @@ labs/**/build/
 labs/**/*.dSYM/
 labs/**/a.out
 labs/**/*.o
+
+# MH_Code: ví dụ OSTEP (cpu.c, mem.c, io.c, threads.c) — chỉ commit source + common*.h
+MH_Code/build/
+*.dSYM/

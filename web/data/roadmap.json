@@ -2,8 +2,9 @@
   "meta": {
     "title": "Lộ trình học Operating Systems cho Graphics Programmer / Rendering Engineer",
     "weekCount": 12,
+    "calendarWeeks": 20,
     "hoursPerWeek": 9,
-    "totalHours": 108,
+    "totalHours": 180,
     "rhythm": "Thứ 2 → Thứ 6: 1h/ngày (5h) · Thứ 7: 2h · Chủ nhật: 2h",
     "rhythmShort": "T2–T6: 1h/ngày · T7: 2h · CN: 2h",
     "schedule": [
@@ -20,7 +21,7 @@
         "label": "Tổng kết, giải thích lại bằng lời của mình và liên hệ với game engine"
       }
     ],
-    "planSource": "OS_Learning_Daily_Plan_12_Weeks.md",
+    "planSource": "OS_Learning_Daily_Plan.md",
     "localPdfHref": "../Doc/Operating%20Systems%20-%20Three%20Easy%20Pieces.pdf",
     "ostepIndex": "https://pages.cs.wisc.edu/~remzi/OSTEP/",
     "source": "OS_Learning_Roadmap_Graphics_Programmer.md"
@@ -96,68 +97,139 @@
       "goal": "",
       "plan": {
         "deliverable": "`labs/w01/` (3 chương trình) + `notes/w01.md`",
+        "calendarWeeks": 2,
         "days": [
           {
             "id": "w01-d1",
+            "week": 1,
             "day": "Thứ 2",
             "minutes": 60,
             "minutesLabel": "60",
             "task": "Đọc Ch. 2 — ba ý tưởng lớn: virtualization, concurrency, persistence",
-            "doneWhen": "Note được 3 dòng: mỗi phần trả lời câu hỏi gì"
+            "doneWhen": "Note 3 dòng: mỗi phần trả lời câu hỏi gì"
           },
           {
             "id": "w01-d2",
+            "week": 1,
             "day": "Thứ 3",
             "minutes": 60,
             "minutesLabel": "60",
             "task": "Đọc Ch. 4 — process là gì, process state (Running/Ready/Blocked), PCB",
-            "doneWhen": "Vẽ lại được sơ đồ chuyển state, không nhìn sách"
+            "doneWhen": "Vẽ lại sơ đồ chuyển state, không nhìn sách"
           },
           {
             "id": "w01-d3",
+            "week": 1,
             "day": "Thứ 4",
             "minutes": 60,
             "minutesLabel": "60",
             "task": "Đọc Ch. 5 — `fork`, `wait`, `exec`",
-            "doneWhen": "Viết lại được thứ tự xảy ra khi fork+exec, kèm glossary \"process vs program\""
+            "doneWhen": "Viết lại được thứ tự fork → exec → exit"
           },
           {
             "id": "w01-d4",
+            "week": 1,
             "day": "Thứ 5",
             "minutes": 60,
             "minutesLabel": "60",
-            "task": "`labs/w01/pid.cpp`: in PID/PPID, `sleep(5)`; chạy song song `ps -o pid,ppid,stat,time,comm`",
-            "doneWhen": "Thấy process của mình trong `ps` và giải thích cột STAT"
+            "task": "Đọc lại Ch. 4–5 phần chưa chắc + tra từ khó (dùng bản dịch nếu cần)",
+            "doneWhen": "Trả lời miệng được \"process khác program ở đâu\""
           },
           {
             "id": "w01-d5",
+            "week": 1,
             "day": "Thứ 6",
             "minutes": 60,
             "minutesLabel": "60",
-            "task": "`labs/w01/fork_demo.cpp`: fork, in PID hai phía, `wait` và không `wait`",
-            "doneWhen": "Giải thích được vì sao không `wait` thì có process \"mồ côi\"/zombie"
+            "task": "Drill `labs/w01/pid.cpp`: in PID/PPID + `sleep(5)`; chạy kèm `ps -o pid,ppid,stat,time,comm`",
+            "doneWhen": "Giải thích được cột STAT của process của mình"
           },
           {
             "id": "w01-d6",
+            "week": 1,
             "day": "Thứ 7",
             "minutes": 120,
             "minutesLabel": "120",
-            "task": "`labs/w01/fork_exec.cpp`: child gọi `execv(\"/bin/echo\", ...)`; so sánh với gọi `echo` bằng `system()`; xem executable bằng `file`, `otool -L`, `nm`",
-            "doneWhen": "Phân biệt được compiler / linker / executable và cái gì nằm trong binary"
+            "task": "Lab phần 1 — `labs/w01/fork_demo.cpp`: fork, in PID hai phía, có `wait` và không `wait`",
+            "doneWhen": "Chỉ ra được process mồ côi/zombie bằng `ps`"
           },
           {
             "id": "w01-d7",
+            "week": 1,
             "day": "Chủ nhật",
             "minutes": 120,
             "minutesLabel": "60+60",
-            "task": "Chốt bảng quan sát (`pid`, `ppid`, `stat`, thời gian sống) → viết `notes/w01.md`: chương trình vs process, luồng chạy từ `./a.out` tới exit, vì sao user không đọc được kernel memory; tick 3 tiêu chí",
-            "doneWhen": "3 tiêu chí tuần 1 tick được mà không mở lại sách"
+            "task": "Chốt bảng quan sát (pid/ppid/stat/thời gian sống) + write-up 5 dòng",
+            "doneWhen": "Bảng có số thật, không chép sách"
+          },
+          {
+            "id": "w01-d8",
+            "week": 2,
+            "day": "Thứ 2",
+            "minutes": 60,
+            "minutesLabel": "60",
+            "task": "Đọc Ch. 2 phần system call: user mode vs kernel mode",
+            "doneWhen": "Giải thích được vì sao app thường không đọc được kernel memory"
+          },
+          {
+            "id": "w01-d9",
+            "week": 2,
+            "day": "Thứ 3",
+            "minutes": 60,
+            "minutesLabel": "60",
+            "task": "Đọc lại Ch. 5 + ghi chú 3 lỗi hay gặp với `fork` (fd chia sẻ, thứ tự in, exit status)",
+            "doneWhen": "Liệt kê được 3 lỗi kèm ví dụ"
+          },
+          {
+            "id": "w01-d10",
+            "week": 2,
+            "day": "Thứ 4",
+            "minutes": 60,
+            "minutesLabel": "60",
+            "task": "Đọc phần \"Limited Direct Execution\" của Ch. 6 (chỉ lấy ý, học kỹ ở Module 5)",
+            "doneWhen": "Nêu được trap/syscall là gì"
+          },
+          {
+            "id": "w01-d11",
+            "week": 2,
+            "day": "Thứ 5",
+            "minutes": 60,
+            "minutesLabel": "60",
+            "task": "Tự kiểm tra 5 câu về process bằng lời của mình (không nhìn sách)",
+            "doneWhen": "Trả lời được ≥4/5"
+          },
+          {
+            "id": "w01-d12",
+            "week": 2,
+            "day": "Thứ 6",
+            "minutes": 60,
+            "minutesLabel": "60",
+            "task": "Drill `labs/w01/fork_exec.cpp` bước 1: child gọi `execv(\"/bin/echo\", ...)`, so với `system()`",
+            "doneWhen": "Phân biệt được fork / exec / system"
+          },
+          {
+            "id": "w01-d13",
+            "week": 2,
+            "day": "Thứ 7",
+            "minutes": 120,
+            "minutesLabel": "120",
+            "task": "Lab phần 2 — hoàn thiện `fork_exec`, soi binary: `file`, `otool -L`, `nm`, `size`",
+            "doneWhen": "Giải thích được vai trò compiler / linker / executable"
+          },
+          {
+            "id": "w01-d14",
+            "week": 2,
+            "day": "Chủ nhật",
+            "minutes": 120,
+            "minutesLabel": "60+60",
+            "task": "Write-up đầy đủ `notes/w01.md` + tick 3 tiêu chí module",
+            "doneWhen": "3 tiêu chí tick được mà không mở lại sách"
           }
         ],
         "notes": [
-          "Nếu dư thời gian: đọc thêm Ch. 5 phần `dup2` và thử redirect stdout của child vào file."
+          "Nếu dư: đọc thêm `dup2` và thử redirect stdout của child vào file."
         ],
-        "minutesPerWeek": 540
+        "minutesTotal": 1080
       }
     },
     {
@@ -234,68 +306,139 @@
       "goal": "",
       "plan": {
         "deliverable": "`labs/w02/` + bảng RSS/VSZ + `notes/w02.md`",
+        "calendarWeeks": 2,
         "days": [
           {
             "id": "w02-d1",
+            "week": 1,
             "day": "Thứ 2",
             "minutes": 60,
             "minutesLabel": "60",
-            "task": "Ch. 13 — kiến trúc address space: code, global/static, stack, heap",
-            "doneWhen": "Vẽ được layout và chỉ đúng biến nào nằm đâu"
+            "task": "Đọc Ch. 13 — address space: code, global/static, stack, heap",
+            "doneWhen": "Vẽ được layout, chỉ đúng biến nào nằm đâu"
           },
           {
             "id": "w02-d2",
+            "week": 1,
             "day": "Thứ 3",
             "minutes": 60,
             "minutesLabel": "60",
-            "task": "Ch. 14 — `malloc/free`, stack vs heap, lỗi thường gặp (leak, dangling, double free)",
-            "doneWhen": "Liệt kê được 3 lỗi và cách nhận ra chúng"
+            "task": "Đọc Ch. 14 — `malloc`/`free`, stack vs heap, vòng đời bộ nhớ, lỗi thường gặp",
+            "doneWhen": "Phân biệt stack/heap bằng vòng đời, nêu 3 lỗi"
           },
           {
             "id": "w02-d3",
+            "week": 1,
             "day": "Thứ 4",
             "minutes": 60,
             "minutesLabel": "60",
-            "task": "Ch. 15 — địa chỉ ảo → vật lý: base+bounds, page, page table, page fault ở mức khái niệm",
-            "doneWhen": "Giải thích được \"vì sao địa chỉ ảo ≠ địa chỉ RAM\" trong 5 câu, ghi glossary \"page fault\""
+            "task": "Đọc Ch. 15 — địa chỉ ảo → vật lý: base+bounds, page, page table",
+            "doneWhen": "Giải thích \"địa chỉ ảo ≠ RAM vật lý\" trong 5 câu"
           },
           {
             "id": "w02-d4",
+            "week": 1,
             "day": "Thứ 5",
             "minutes": 60,
             "minutesLabel": "60",
-            "task": "`labs/w02/addresses.cpp`: in địa chỉ local/global/static/`new`; chạy 2 lần liên tiếp",
-            "doneWhen": "Thấy địa chỉ đổi giữa 2 lần chạy và giải thích được đó là ASLR"
+            "task": "Đọc lại Ch. 15 + tra cụm \"page fault\", \"demand paging\"",
+            "doneWhen": "Nêu được page fault ở mức khái niệm"
           },
           {
             "id": "w02-d5",
+            "week": 1,
             "day": "Thứ 6",
             "minutes": 60,
             "minutesLabel": "60",
-            "task": "Thêm `sleep` vào cuối chương trình, chạy nền rồi `vmmap <pid>` và `heap <pid>`",
-            "doneWhen": "Chỉ được vùng tương ứng trên `vmmap` với từng loại biến"
+            "task": "Drill `labs/w02/addresses.cpp`: in địa chỉ local/global/static/`new`, chạy 2 lần",
+            "doneWhen": "Chỉ đúng vùng nhớ trên layout của từng biến"
           },
           {
             "id": "w02-d6",
+            "week": 1,
             "day": "Thứ 7",
             "minutes": 120,
             "minutesLabel": "120",
-            "task": "`labs/w02/alloc_touch.cpp`: cấp phát 1 GiB nhưng **chỉ ghi 1 byte mỗi 16KB**; so với bản ghi toàn bộ; đo bằng `/usr/bin/time -l` + `vmmap -summary`; thử ASan (`-fsanitize=address`) với double free và leak",
-            "doneWhen": "Thấy rõ cấp phát ≠ chạm vào RAM vật lý (RSS khác VSZ)"
+            "task": "Lab phần 1 — chương trình `sleep` rồi chạy `vmmap -summary` và `heap <pid>`",
+            "doneWhen": "Map được từng loại biến lên output của `vmmap`"
           },
           {
             "id": "w02-d7",
+            "week": 1,
             "day": "Chủ nhật",
             "minutes": 120,
             "minutesLabel": "60+60",
-            "task": "Bảng: cấp phát / đã ghi / max RSS / page faults cho 3 biến thể; write-up + tick tiêu chí",
-            "doneWhen": "Bảng số liệu + giải thích page fault bằng lời của mình"
+            "task": "Bảng địa chỉ + nhận xét ASLR (địa chỉ đổi giữa 2 lần chạy)",
+            "doneWhen": "Bảng + giải thích được vì sao địa chỉ đổi"
+          },
+          {
+            "id": "w02-d8",
+            "week": 2,
+            "day": "Thứ 2",
+            "minutes": 60,
+            "minutesLabel": "60",
+            "task": "Đọc Ch. 13–14 phần \"vùng nhớ nào tự giải phóng, vùng nào không\"",
+            "doneWhen": "Giải thích được vì sao local biến mất sau return"
+          },
+          {
+            "id": "w02-d9",
+            "week": 2,
+            "day": "Thứ 3",
+            "minutes": 60,
+            "minutesLabel": "60",
+            "task": "Đọc Ch. 15 phần TLB (khái niệm)",
+            "doneWhen": "Nêu được TLB giúp gì và khi nào miss"
+          },
+          {
+            "id": "w02-d10",
+            "week": 2,
+            "day": "Thứ 4",
+            "minutes": 60,
+            "minutesLabel": "60",
+            "task": "Đọc lại phần page fault + ghi chú cách đo RSS/VSZ/page faults",
+            "doneWhen": "Biết sẽ đo gì trong lab"
+          },
+          {
+            "id": "w02-d11",
+            "week": 2,
+            "day": "Thứ 5",
+            "minutes": 60,
+            "minutesLabel": "60",
+            "task": "Tự kiểm tra 5 câu về virtual memory",
+            "doneWhen": "Trả lời được ≥4/5"
+          },
+          {
+            "id": "w02-d12",
+            "week": 2,
+            "day": "Thứ 6",
+            "minutes": 60,
+            "minutesLabel": "60",
+            "task": "Drill `labs/w02/alloc_touch.cpp` bước 1: cấp phát 1 GiB, in `vmmap` **trước khi** ghi",
+            "doneWhen": "Thấy VSZ lớn nhưng RSS nhỏ"
+          },
+          {
+            "id": "w02-d13",
+            "week": 2,
+            "day": "Thứ 7",
+            "minutes": 120,
+            "minutesLabel": "120",
+            "task": "Lab phần 2 — ghi 1 byte mỗi 16KB vs ghi toàn bộ; đo `/usr/bin/time -l`; thử ASan với double free + leak",
+            "doneWhen": "Có bảng page faults/RSS cho 3 biến thể"
+          },
+          {
+            "id": "w02-d14",
+            "week": 2,
+            "day": "Chủ nhật",
+            "minutes": 120,
+            "minutesLabel": "60+60",
+            "task": "Write-up + tick tiêu chí module",
+            "doneWhen": "Giải thích được \"cấp phát ≠ chạm\" bằng số của mình"
           }
         ],
         "notes": [
-          "Nếu dư: thử `mmap` anonymous thay `new` để thấy cùng cơ chế."
+          "Nếu dư: thay `new` bằng `mmap` anonymous để thấy cùng cơ chế."
         ],
-        "minutesPerWeek": 540
+        "minutesTotal": 1080
       }
     },
     {
@@ -367,68 +510,139 @@
       "goal": "",
       "plan": {
         "deliverable": "`labs/w03/` allocator tự viết + bảng utilization",
+        "calendarWeeks": 2,
         "days": [
           {
             "id": "w03-d1",
+            "week": 1,
             "day": "Thứ 2",
             "minutes": 60,
             "minutesLabel": "60",
-            "task": "Ch. 17 nửa đầu — free list, splitting, coalescing",
+            "task": "Đọc Ch. 17 nửa đầu — free list, splitting, coalescing",
             "doneWhen": "Giải thích được vì sao cần coalescing bằng ví dụ tự nghĩ"
           },
           {
             "id": "w03-d2",
+            "week": 1,
             "day": "Thứ 3",
             "minutes": 60,
             "minutesLabel": "60",
-            "task": "Ch. 17 nửa sau — first-fit / best-fit / worst-fit, segregated list",
-            "doneWhen": "So sánh được 3 chiến lược về ưu/nhược điểm"
+            "task": "Đọc Ch. 17 nửa sau — first-fit / best-fit / worst-fit, segregated list",
+            "doneWhen": "So sánh 3 chiến lược về ưu/nhược điểm"
           },
           {
             "id": "w03-d3",
+            "week": 1,
             "day": "Thứ 4",
             "minutes": 60,
             "minutesLabel": "60",
-            "task": "Ôn Ch. 14 + glossary \"internal vs external fragmentation\"",
-            "doneWhen": "Phân biệt được 2 loại fragmentation bằng ví dụ số cụ thể"
+            "task": "Ôn Ch. 14 + đọc lại phần allocation header/metadata",
+            "doneWhen": "Nêu được allocator cần lưu gì trong header"
           },
           {
             "id": "w03-d4",
+            "week": 1,
             "day": "Thứ 5",
             "minutes": 60,
             "minutesLabel": "60",
-            "task": "`labs/w03/arena.cpp`: 1 MiB buffer, `alloc(size)` kiểu bump pointer, `free` ghi header độ dài block",
-            "doneWhen": "Cấp phát/giải phóng được nhiều block, in được free list"
+            "task": "Đọc lại phần internal vs external fragmentation",
+            "doneWhen": "Phân biệt bằng ví dụ số cụ thể"
           },
           {
             "id": "w03-d5",
+            "week": 1,
             "day": "Thứ 6",
             "minutes": 60,
             "minutesLabel": "60",
-            "task": "Thêm chọn block theo first-fit; sửa lỗi khi `free` liền kề (chưa cần coalesce)",
-            "doneWhen": "In được danh sách block: địa chỉ, size, trống/dùng"
+            "task": "Drill `labs/w03/arena.cpp`: 1 MiB buffer, bump allocator, ghi header độ dài",
+            "doneWhen": "Cấp phát được nhiều block, in được free list"
           },
           {
             "id": "w03-d6",
+            "week": 1,
             "day": "Thứ 7",
             "minutes": 120,
             "minutesLabel": "120",
-            "task": "Workload ngẫu nhiên có seed cố định: 10k thao tác (alloc size 16–4096, free ngẫu nhiên), chạy 5 seed; đo **utilization = bytes cấp phát được / 1 MiB** và số lần fail; so first-fit vs best-fit",
-            "doneWhen": "Có bảng utilization cho 2 chiến lược × 5 seed"
+            "task": "Lab phần 1 — thêm `free` + first-fit tìm block đầu tiên phù hợp",
+            "doneWhen": "In được danh sách block (địa chỉ, size, trống/dùng)"
           },
           {
             "id": "w03-d7",
+            "week": 1,
             "day": "Chủ nhật",
             "minutes": 120,
             "minutesLabel": "60+60",
-            "task": "Thêm coalescing rồi đo lại; thí nghiệm `std::vector::push_back` (realloc pattern) đo allocation count bằng cách override `operator new`; write-up + tick tiêu chí",
-            "doneWhen": "Chỉ ra được 1 con số chứng minh coalescing giúp giảm fragmentation"
+            "task": "Kiểm tra tính đúng (không block nào overlap) + write-up 5 dòng",
+            "doneWhen": "Không có block nào chồng lên nhau"
+          },
+          {
+            "id": "w03-d8",
+            "week": 2,
+            "day": "Thứ 2",
+            "minutes": 60,
+            "minutesLabel": "60",
+            "task": "Đọc Ch. 17 + tìm hiểu malloc chunk header thực tế",
+            "doneWhen": "So sánh được allocator sách vs malloc thật"
+          },
+          {
+            "id": "w03-d9",
+            "week": 2,
+            "day": "Thứ 3",
+            "minutes": 60,
+            "minutesLabel": "60",
+            "task": "Đọc lại phần coalescing, viết trước 3 bước coalesce cho code của mình",
+            "doneWhen": "Viết được 3 bước coalesce trên giấy"
+          },
+          {
+            "id": "w03-d10",
+            "week": 2,
+            "day": "Thứ 4",
+            "minutes": 60,
+            "minutesLabel": "60",
+            "task": "Đọc lại + chuẩn bị workload đo utilization",
+            "doneWhen": "Biết sẽ đo gì (bytes dùng / 1 MiB, số lần fail)"
+          },
+          {
+            "id": "w03-d11",
+            "week": 2,
+            "day": "Thứ 5",
+            "minutes": 60,
+            "minutesLabel": "60",
+            "task": "Tự kiểm tra 5 câu về fragmentation",
+            "doneWhen": "Trả lời được ≥4/5"
+          },
+          {
+            "id": "w03-d12",
+            "week": 2,
+            "day": "Thứ 6",
+            "minutes": 60,
+            "minutesLabel": "60",
+            "task": "Drill: thêm coalescing cho `free`",
+            "doneWhen": "Free list gộp được 2 block liền kề"
+          },
+          {
+            "id": "w03-d13",
+            "week": 2,
+            "day": "Thứ 7",
+            "minutes": 120,
+            "minutesLabel": "120",
+            "task": "Lab phần 2 — workload 10k thao tác (size 16–4096, seed cố định) × 5 seed; utilization first-fit vs best-fit; so trước/sau coalescing",
+            "doneWhen": "Bảng utilization 2 chiến lược × 5 seed"
+          },
+          {
+            "id": "w03-d14",
+            "week": 2,
+            "day": "Chủ nhật",
+            "minutes": 120,
+            "minutesLabel": "60+60",
+            "task": "Write-up + tick tiêu chí module",
+            "doneWhen": "Chỉ ra 1 con số chứng minh coalescing giúp giảm fragmentation"
           }
         ],
         "notes": [
           "Nếu kẹt: bỏ best-fit, chỉ cần first-fit + coalescing là đủ tiêu chí."
         ],
-        "minutesPerWeek": 540
+        "minutesTotal": 1080
       }
     },
     {
@@ -499,69 +713,77 @@
       "project": "",
       "goal": "",
       "plan": {
-        "deliverable": "3 benchmark + bảng median + `notes/w04.md`",
+        "deliverable": "2 benchmark + bảng median + `notes/w04.md`",
+        "calendarWeeks": 1,
         "days": [
           {
             "id": "w04-d1",
+            "week": 1,
             "day": "Thứ 2",
             "minutes": 60,
             "minutesLabel": "60",
-            "task": "Đọc phần cache hierarchy: L1/L2/L3, cache line, tại sao cache line chứ không phải từng byte",
-            "doneWhen": "Giải thích được \"đọc 4 byte vẫn phải nạp 128 byte\""
+            "task": "Đọc phần cache hierarchy: L1/L2/L3, cache line, vì sao nạp cả line",
+            "doneWhen": "Giải thích được \"đọc 4 byte vẫn nạp 128 byte\""
           },
           {
             "id": "w04-d2",
+            "week": 1,
             "day": "Thứ 3",
             "minutes": 60,
             "minutesLabel": "60",
-            "task": "Đọc phần locality & prefetch: spatial/temporal locality, phần nào lập trình viên kiểm soát được",
-            "doneWhen": "Nêu được 3 cách code ảnh hưởng locality"
+            "task": "Đọc phần locality & prefetch: spatial/temporal locality",
+            "doneWhen": "Nêu 3 cách code ảnh hưởng locality"
           },
           {
             "id": "w04-d3",
+            "week": 1,
             "day": "Thứ 4",
             "minutes": 60,
             "minutesLabel": "60",
-            "task": "`sysctl hw.cachelinesize hw.l1icachesize hw.l2cachesize hw.ncpu`; viết glossary: cache line, spatial/temporal locality, cache miss",
-            "doneWhen": "Glossary 3 mục, mỗi mục ≤3 câu"
+            "task": "Đọc lại + `sysctl hw.cachelinesize hw.l1icachesize hw.l2cachesize`",
+            "doneWhen": "Ghi lại số của máy mình vào note"
           },
           {
             "id": "w04-d4",
+            "week": 1,
             "day": "Thứ 5",
             "minutes": 60,
             "minutesLabel": "60",
-            "task": "`labs/w04/seq_vs_rand.cpp`: mảng `uint64_t` 256 MiB; duyệt tuần tự vs stride 16KB vs random (seed cố định); in thời gian",
-            "doneWhen": "Chạy được 3 biến thể, cùng một khối lượng truy cập"
+            "task": "Đọc phần data layout (AoS/SoA), ôn bằng ví dụ ECS",
+            "doneWhen": "Nêu được khi nào AoS tốt hơn SoA"
           },
           {
             "id": "w04-d5",
+            "week": 1,
             "day": "Thứ 6",
             "minutes": 60,
             "minutesLabel": "60",
-            "task": "`labs/w04/aos_soa.cpp`: 1M object (pos float[3], radius, id) ở dạng AoS và SoA; cùng workload cộng dồn `x`",
-            "doneWhen": "Hai bản cho cùng kết quả checksum"
+            "task": "Drill `labs/w04/seq_vs_rand.cpp`: mảng 256 MiB, tuần tự vs stride 16KB vs random",
+            "doneWhen": "3 biến thể cùng khối lượng truy cập"
           },
           {
             "id": "w04-d6",
+            "week": 1,
             "day": "Thứ 7",
             "minutes": 120,
             "minutesLabel": "120",
-            "task": "Chạy mỗi biến thể ≥5 lần, lấy median; thêm `labs/w04/false_sharing.cpp`: 2 thread cùng tăng biến trong cùng cache line vs có padding 128B",
-            "doneWhen": "Có bảng median đầy đủ + chênh lệch false sharing"
+            "task": "Lab — `labs/w04/aos_soa.cpp`: 1M object AoS vs SoA, cùng workload; ≥5 lần lấy median",
+            "doneWhen": "Hai bản cùng checksum + bảng median"
           },
           {
             "id": "w04-d7",
+            "week": 1,
             "day": "Chủ nhật",
             "minutes": 120,
             "minutesLabel": "60+60",
-            "task": "Bảng tổng hợp + giải thích; phân biệt cache miss vs page fault (dùng số liệu tuần 2); liên hệ ECS/culling; tick tiêu chí",
-            "doneWhen": "Giải thích được mọi con số trong bảng của mình"
+            "task": "Bảng tổng hợp + giải thích; phân biệt cache miss vs page fault",
+            "doneWhen": "Giải thích được mọi con số trong bảng"
           }
         ],
         "notes": [
-          "Lưu ý: trên Apple Silicon number rất \"phẳng\" ở mức vài ns — đừng kết luận từ 1 lần chạy; luôn so sánh tương đối giữa các biến thể."
+          "Nếu dư: đổi kích thước mảng qua các mốc 1/4/16/64 MiB để thấy điểm gãy cache."
         ],
-        "minutesPerWeek": 540
+        "minutesTotal": 540
       }
     },
     {
@@ -638,68 +860,137 @@
       "goal": "",
       "plan": {
         "deliverable": "bảng thread scaling 1→10 + đo chi phí context switch",
+        "calendarWeeks": 2,
         "days": [
           {
             "id": "w05-d1",
+            "week": 1,
             "day": "Thứ 2",
             "minutes": 60,
             "minutesLabel": "60",
-            "task": "Ch. 6 — user mode/kernel mode, system call, trap; cách OS chuyển giữa các process",
-            "doneWhen": "Mô tả được đường đi của 1 system call bằng lời"
+            "task": "Đọc Ch. 6 — limited direct execution, syscall, trap, context switch",
+            "doneWhen": "Mô tả được đường đi của 1 system call"
           },
           {
             "id": "w05-d2",
+            "week": 1,
             "day": "Thứ 3",
             "minutes": 60,
             "minutesLabel": "60",
-            "task": "Ch. 7 — metric (turnaround, response), FIFO/SJF/STCF/RR, time slice",
-            "doneWhen": "Tính tay được 1 ví dụ 3 process với RR"
+            "task": "Đọc Ch. 7 nửa đầu — metric (turnaround, response), FIFO, SJF",
+            "doneWhen": "Tính tay được 1 ví dụ 3 process với FIFO/SJF"
           },
           {
             "id": "w05-d3",
+            "week": 1,
             "day": "Thứ 4",
             "minutes": 60,
             "minutesLabel": "60",
-            "task": "Ch. 10 — cache affinity, single vs multi queue, load balancing; glossary \"context switch\"",
-            "doneWhen": "Phân biệt context switch với gọi hàm bình thường"
+            "task": "Đọc Ch. 7 nửa sau — STCF, RR, time slice, ảnh hưởng của I/O",
+            "doneWhen": "Tính tay được 1 ví dụ với RR"
           },
           {
             "id": "w05-d4",
+            "week": 1,
             "day": "Thứ 5",
             "minutes": 60,
             "minutesLabel": "60",
-            "task": "`labs/w05/burn.cpp`: workload CPU-bound thuần, chạy 1/2/4/8/10 thread; đo wall vs CPU time bằng `/usr/bin/time -l`",
-            "doneWhen": "Có số cho ít nhất 3 mức thread"
+            "task": "Đọc lại Ch. 6 phần context switch + tra \"preemption\"",
+            "doneWhen": "Phân biệt context switch với gọi hàm"
           },
           {
             "id": "w05-d5",
+            "week": 1,
             "day": "Thứ 6",
             "minutes": 60,
             "minutesLabel": "60",
-            "task": "`labs/w05/ctx.cpp`: 2 thread ping-pong qua `socketpair`/pipe; so với vòng lặp gọi hàm rỗng (đo ns/lần chuyển)",
-            "doneWhen": "Có con số ns cho 1 lần chuyển, và cho 1 lần gọi hàm"
+            "task": "Drill `labs/w05/burn.cpp`: workload CPU-bound, 1/2/4 thread, đo wall vs CPU time",
+            "doneWhen": "Có số cho ≥3 mức thread"
           },
           {
             "id": "w05-d6",
+            "week": 1,
             "day": "Thứ 7",
             "minutes": 120,
             "minutesLabel": "120",
-            "task": "Hoàn thiện bảng 1/2/4/8/10 thread (≥5 lần, median); chạy `sample <pid> 5` để xem thread nằm ở đâu; `top -l 2 -o cpu` xem utilization",
-            "doneWhen": "Bảng scaling + nhận xét P-core/E-core"
+            "task": "Lab phần 1 — mở rộng 1/2/4/8/10 thread, ≥5 lần, median",
+            "doneWhen": "Bảng scaling bước đầu"
           },
           {
             "id": "w05-d7",
+            "week": 1,
             "day": "Chủ nhật",
             "minutes": 120,
             "minutesLabel": "60+60",
-            "task": "Write-up: vì sao thêm thread không tuyến tính, giới hạn của benchmark đơn giản này; tick tiêu chí (có phần \"hiểu giới hạn\")",
-            "doneWhen": "Trả lời được \"10 core nhưng speedup ≠ 10×\" bằng số liệu của mình"
+            "task": "Chốt bảng + nhận xét sơ bộ P-core/E-core",
+            "doneWhen": "Bảng có độ biến thiên giữa các lần chạy"
+          },
+          {
+            "id": "w05-d8",
+            "week": 2,
+            "day": "Thứ 2",
+            "minutes": 60,
+            "minutesLabel": "60",
+            "task": "Đọc Ch. 10 — cache affinity, single vs multi queue, load balancing",
+            "doneWhen": "Nêu được vì sao cache affinity quan trọng"
+          },
+          {
+            "id": "w05-d9",
+            "week": 2,
+            "day": "Thứ 3",
+            "minutes": 60,
+            "minutesLabel": "60",
+            "task": "Đọc lại Ch. 7 phần RR + time slice, ghi chú trade-off",
+            "doneWhen": "Giải thích được time slice nhỏ/lớn ảnh hưởng gì"
+          },
+          {
+            "id": "w05-d10",
+            "week": 2,
+            "day": "Thứ 4",
+            "minutes": 60,
+            "minutesLabel": "60",
+            "task": "Đọc lại Ch. 6–7, chuẩn bị đo chi phí chuyển ngữ cảnh",
+            "doneWhen": "Biết sẽ đo gì (ns/lần chuyển)"
+          },
+          {
+            "id": "w05-d11",
+            "week": 2,
+            "day": "Thứ 5",
+            "minutes": 60,
+            "minutesLabel": "60",
+            "task": "Tự kiểm tra 5 câu về scheduling",
+            "doneWhen": "Trả lời được ≥4/5"
+          },
+          {
+            "id": "w05-d12",
+            "week": 2,
+            "day": "Thứ 6",
+            "minutes": 60,
+            "minutesLabel": "60",
+            "task": "Drill `labs/w05/ctx.cpp`: 2 thread ping-pong qua `socketpair`; so với vòng lặp gọi hàm rỗng",
+            "doneWhen": "Có số ns cho 1 lần chuyển và 1 lần gọi hàm"
+          },
+          {
+            "id": "w05-d13",
+            "week": 2,
+            "day": "Thứ 7",
+            "minutes": 120,
+            "minutesLabel": "120",
+            "task": "Lab phần 2 — `sample <pid> 5` + `top -l 2 -o cpu` khi chạy 10 thread; hoàn thiện bảng scaling",
+            "doneWhen": "Bảng + giải thích điểm gãy"
+          },
+          {
+            "id": "w05-d14",
+            "week": 2,
+            "day": "Chủ nhật",
+            "minutes": 120,
+            "minutesLabel": "60+60",
+            "task": "Write-up: vì sao thêm thread không tuyến tính; giới hạn benchmark; tick tiêu chí",
+            "doneWhen": "Trả lời được \"10 core nhưng speedup ≠ 10×\" bằng số của mình"
           }
         ],
-        "notes": [
-          "Nếu dư: dùng `os_signpost`/`sample` để thấy thread migrate giữa P/E core (chỉ quan sát, không cần kết luận sâu)."
-        ],
-        "minutesPerWeek": 540
+        "notes": [],
+        "minutesTotal": 1080
       }
     },
     {
@@ -770,67 +1061,138 @@
       "project": "",
       "goal": "",
       "plan": {
-        "deliverable": "3 phiên bản counter + TSan report dán vào notes",
+        "deliverable": "3 phiên bản counter + TSan report + false sharing demo",
+        "calendarWeeks": 2,
         "days": [
           {
             "id": "w06-d1",
+            "week": 1,
             "day": "Thứ 2",
             "minutes": 60,
             "minutesLabel": "60",
-            "task": "Ch. 26 — thread chia sẻ gì (address space, code, global) và riêng gì (stack, register); race condition",
-            "doneWhen": "Vẽ lại được sơ đồ chia sẻ giữa 2 thread"
+            "task": "Đọc Ch. 26 — thread chia sẻ gì (address space, code, global), riêng gì (stack, register)",
+            "doneWhen": "Vẽ được sơ đồ chia sẻ giữa 2 thread"
           },
           {
             "id": "w06-d2",
+            "week": 1,
             "day": "Thứ 3",
             "minutes": 60,
             "minutesLabel": "60",
-            "task": "Ch. 27 — `pthread` / `std::thread`, `join`, `detach`, `std::jthread` (C++20)",
-            "doneWhen": "Viết được 3 dòng code tạo + join thread không cần tra"
+            "task": "Đọc Ch. 27 — `pthread` / `std::thread`, `join`, `detach`, `jthread`",
+            "doneWhen": "Viết 3 dòng tạo + join thread không cần tra"
           },
           {
             "id": "w06-d3",
+            "week": 1,
             "day": "Thứ 4",
             "minutes": 60,
             "minutesLabel": "60",
-            "task": "Ôn + glossary \"data race vs race condition\"",
+            "task": "Đọc lại Ch. 26 phần race condition + ghi chú data race vs race condition",
             "doneWhen": "Phân biệt bằng 1 ví dụ mỗi loại"
           },
           {
             "id": "w06-d4",
+            "week": 1,
             "day": "Thứ 5",
             "minutes": 60,
             "minutesLabel": "60",
-            "task": "`labs/w06/counter.cpp`: 4 thread × 1M lần `counter++`, in giá trị cuối; chạy 100 lần, đếm số lần sai",
-            "doneWhen": "Có con số \"x/100 lần sai\""
+            "task": "Đọc lại thread lifecycle + chuẩn bị thí nghiệm counter",
+            "doneWhen": "Biết sẽ đo gì (số lần sai/100)"
           },
           {
             "id": "w06-d5",
+            "week": 1,
             "day": "Thứ 6",
             "minutes": 60,
             "minutesLabel": "60",
-            "task": "Sửa bằng `std::mutex`, rồi bằng `std::atomic<long>::fetch_add(relaxed)`; so throughput",
-            "doneWhen": "3 phiên bản cho kết quả đúng/ sai rõ ràng"
+            "task": "Drill `labs/w06/counter.cpp`: 4 thread × 1M `counter++`, chạy 100 lần",
+            "doneWhen": "Có con số \"x/100 lần sai\""
           },
           {
             "id": "w06-d6",
+            "week": 1,
             "day": "Thứ 7",
             "minutes": 120,
             "minutesLabel": "120",
-            "task": "Build lại bản unsync với `-fsanitize=thread` → lưu warning vào notes; thử thêm volatile (vẫn sai); đo throughput 3 phiên bản (≥5 lần, median)",
-            "doneWhen": "Có TSan report + bảng throughput"
+            "task": "Lab phần 1 — sửa bằng `std::mutex` rồi `std::atomic` (relaxed); so throughput",
+            "doneWhen": "3 phiên bản đúng/sai rõ ràng"
           },
           {
             "id": "w06-d7",
+            "week": 1,
             "day": "Chủ nhật",
             "minutes": 120,
             "minutesLabel": "60+60",
-            "task": "Write-up: vì sao `counter++` không atomic, vì sao volatile không cứu được; tick tiêu chí (giờ thứ hai = buffer nếu trượt TSan/đo)",
-            "doneWhen": "3 tiêu chí tuần 6 tick, có bằng chứng"
+            "task": "Bảng throughput 3 phiên bản + write-up 5 dòng",
+            "doneWhen": "Bảng có median ≥5 lần"
+          },
+          {
+            "id": "w06-d8",
+            "week": 2,
+            "day": "Thứ 2",
+            "minutes": 60,
+            "minutesLabel": "60",
+            "task": "Đọc lại Ch. 26–27 + cách đọc ThreadSanitizer report",
+            "doneWhen": "Hiểu report đang nói gì"
+          },
+          {
+            "id": "w06-d9",
+            "week": 2,
+            "day": "Thứ 3",
+            "minutes": 60,
+            "minutesLabel": "60",
+            "task": "Đọc phần memory order (relaxed vs seq_cst) ở mức khái niệm",
+            "doneWhen": "Nêu được khác biệt chính"
+          },
+          {
+            "id": "w06-d10",
+            "week": 2,
+            "day": "Thứ 4",
+            "minutes": 60,
+            "minutesLabel": "60",
+            "task": "Đọc lại + chuẩn bị false sharing (cache line 128B)",
+            "doneWhen": "Biết sẽ đo gì"
+          },
+          {
+            "id": "w06-d11",
+            "week": 2,
+            "day": "Thứ 5",
+            "minutes": 60,
+            "minutesLabel": "60",
+            "task": "Tự kiểm tra 5 câu về thread và race",
+            "doneWhen": "Trả lời được ≥4/5"
+          },
+          {
+            "id": "w06-d12",
+            "week": 2,
+            "day": "Thứ 6",
+            "minutes": 60,
+            "minutesLabel": "60",
+            "task": "Drill `labs/w06/false_sharing.cpp`: 2 thread tăng biến cùng cache line vs padding 128B",
+            "doneWhen": "Có số chênh lệch"
+          },
+          {
+            "id": "w06-d13",
+            "week": 2,
+            "day": "Thứ 7",
+            "minutes": 120,
+            "minutesLabel": "120",
+            "task": "Lab phần 2 — build bản unsync với `-fsanitize=thread`, lưu report; thử thêm `volatile` (vẫn sai)",
+            "doneWhen": "TSan report + giải thích vì sao không cứu được"
+          },
+          {
+            "id": "w06-d14",
+            "week": 2,
+            "day": "Chủ nhật",
+            "minutes": 120,
+            "minutesLabel": "60+60",
+            "task": "Write-up + tick tiêu chí module",
+            "doneWhen": "Giải thích được `counter++` không atomic bằng lời của mình"
           }
         ],
         "notes": [],
-        "minutesPerWeek": 540
+        "minutesTotal": 1080
       }
     },
     {
@@ -906,69 +1268,140 @@
       "project": "",
       "goal": "",
       "plan": {
-        "deliverable": "bounded queue + 2 phiên bản (mutex+CV, semaphore) + bảng throughput",
+        "deliverable": "bounded queue (mutex+CV và semaphore) + bảng throughput",
+        "calendarWeeks": 2,
         "days": [
           {
             "id": "w07-d1",
+            "week": 1,
             "day": "Thứ 2",
             "minutes": 60,
             "minutesLabel": "60",
-            "task": "Ch. 28 — critical section, mutual exclusion, spinlock, test-and-set, lock contention",
-            "doneWhen": "Giải thích được vì sao spin giúp ích khi critical section rất ngắn"
+            "task": "Đọc Ch. 28 — critical section, mutual exclusion, spinlock, test-and-set",
+            "doneWhen": "Giải thích được vì sao spin hữu ích khi critical section ngắn"
           },
           {
             "id": "w07-d2",
+            "week": 1,
             "day": "Thứ 3",
             "minutes": 60,
             "minutesLabel": "60",
-            "task": "Ch. 30 — `wait`/`signal`, lý do phải `while` chứ không `if`, mất signal",
-            "doneWhen": "Viết đúng mẫu producer/consumer trên giấy"
+            "task": "Đọc Ch. 28 phần lock contention + fair lock",
+            "doneWhen": "Nêu được trade-off của spinlock"
           },
           {
             "id": "w07-d3",
+            "week": 1,
             "day": "Thứ 4",
             "minutes": 60,
             "minutesLabel": "60",
-            "task": "Ch. 31 — semaphore như lock và như điều kiện; glossary \"semaphore vs CV\"",
-            "doneWhen": "Nêu được khi nào chọn cái nào"
+            "task": "Đọc Ch. 30 — `wait`/`signal`, vì sao phải `while` chứ không `if`",
+            "doneWhen": "Viết đúng mẫu producer/consumer trên giấy"
           },
           {
             "id": "w07-d4",
+            "week": 1,
             "day": "Thứ 5",
             "minutes": 60,
             "minutesLabel": "60",
-            "task": "`labs/w07/queue_mutex.cpp`: bounded queue (ring buffer) với mutex + 2 CV, `push`/`pop` chặn",
-            "doneWhen": "Compile + chạy 1 producer 1 consumer không deadlock"
+            "task": "Đọc lại Ch. 30 phần mất signal + broadcast",
+            "doneWhen": "Nêu được khi nào dùng broadcast"
           },
           {
             "id": "w07-d5",
+            "week": 1,
             "day": "Thứ 6",
             "minutes": 60,
             "minutesLabel": "60",
-            "task": "Thêm `queue_sem.cpp` dùng 2 semaphore; stress test: 4 producer + 4 consumer, kiểm tra tổng item khớp",
-            "doneWhen": "Tổng item vào = tổng item ra ở 10 lần chạy"
+            "task": "Drill `labs/w07/queue_mutex.cpp`: ring buffer + mutex + 2 CV, `push`/`pop` chặn",
+            "doneWhen": "1 producer + 1 consumer chạy không deadlock"
           },
           {
             "id": "w07-d6",
+            "week": 1,
             "day": "Thứ 7",
             "minutes": 120,
             "minutesLabel": "120",
-            "task": "Đo throughput khi tăng số producer/consumer (1/2/4/8 mỗi loại) cho cả 2 phiên bản; cố tình tạo deadlock 2 lock ngược thứ tự rồi sửa",
-            "doneWhen": "Bảng throughput + giải thích deadlock bằng chính code của mình"
+            "task": "Lab phần 1 — stress test 4 producer + 4 consumer, kiểm tra tổng item khớp",
+            "doneWhen": "10 lần chạy đều đúng tổng"
           },
           {
             "id": "w07-d7",
+            "week": 1,
             "day": "Chủ nhật",
             "minutes": 120,
             "minutesLabel": "60+60",
-            "task": "Write-up: vì sao contention làm giảm hiệu năng (dùng số liệu), starvation; tick tiêu chí",
-            "doneWhen": "3 tiêu chí tuần 7 tick"
+            "task": "Kiểm tra correctness + write-up 5 dòng",
+            "doneWhen": "Không mất/nhân đôi item"
+          },
+          {
+            "id": "w07-d8",
+            "week": 2,
+            "day": "Thứ 2",
+            "minutes": 60,
+            "minutesLabel": "60",
+            "task": "Đọc Ch. 31 — semaphore như lock và như điều kiện",
+            "doneWhen": "Nêu được khi nào chọn semaphore thay CV"
+          },
+          {
+            "id": "w07-d9",
+            "week": 2,
+            "day": "Thứ 3",
+            "minutes": 60,
+            "minutesLabel": "60",
+            "task": "Đọc lại Ch. 28–31, ghi chú 4 điều kiện deadlock",
+            "doneWhen": "Kể được 4 điều kiện deadlock"
+          },
+          {
+            "id": "w07-d10",
+            "week": 2,
+            "day": "Thứ 4",
+            "minutes": 60,
+            "minutesLabel": "60",
+            "task": "Đọc lại + chuẩn bị đo contention",
+            "doneWhen": "Biết sẽ đo gì (throughput theo số thread)"
+          },
+          {
+            "id": "w07-d11",
+            "week": 2,
+            "day": "Thứ 5",
+            "minutes": 60,
+            "minutesLabel": "60",
+            "task": "Tự kiểm tra 5 câu về lock/CV/semaphore",
+            "doneWhen": "Trả lời được ≥4/5"
+          },
+          {
+            "id": "w07-d12",
+            "week": 2,
+            "day": "Thứ 6",
+            "minutes": 60,
+            "minutesLabel": "60",
+            "task": "Drill `labs/w07/queue_sem.cpp`: cùng bài toán bằng 2 semaphore",
+            "doneWhen": "Chạy đúng, so được với bản mutex"
+          },
+          {
+            "id": "w07-d13",
+            "week": 2,
+            "day": "Thứ 7",
+            "minutes": 120,
+            "minutesLabel": "120",
+            "task": "Lab phần 2 — throughput 1/2/4/8 producer+consumer cho 2 phiên bản; cố tình tạo deadlock 2 lock ngược thứ tự rồi sửa",
+            "doneWhen": "Bảng throughput + giải thích deadlock bằng code của mình"
+          },
+          {
+            "id": "w07-d14",
+            "week": 2,
+            "day": "Chủ nhật",
+            "minutes": 120,
+            "minutesLabel": "60+60",
+            "task": "Write-up + tick tiêu chí module",
+            "doneWhen": "Giải thích được contention bằng số liệu"
           }
         ],
         "notes": [
-          "Nếu kẹt: chỉ cần mutex+CV đúng và có bảng throughput — phần semaphore có thể lùi sang tuần 8 ngày Thứ 2."
+          "Nếu kẹt: chỉ cần bản mutex+CV đúng và có bảng throughput."
         ],
-        "minutesPerWeek": 540
+        "minutesTotal": 1080
       }
     },
     {
@@ -1044,67 +1477,75 @@
       "project": "",
       "goal": "",
       "plan": {
-        "deliverable": "`labs/w08/job_system` + bảng speedup 1→10 worker",
+        "deliverable": "`labs/w08/` job queue + bảng speedup",
+        "calendarWeeks": 1,
         "days": [
           {
             "id": "w08-d1",
+            "week": 1,
             "day": "Thứ 2",
             "minutes": 60,
             "minutesLabel": "60",
-            "task": "Ch. 29 — concurrent counter/list/queue, hand-over-hand locking",
+            "task": "Đọc Ch. 29 — concurrent counter/list/queue, hand-over-hand locking",
             "doneWhen": "Nêu được chi phí của lock mịn"
           },
           {
             "id": "w08-d2",
+            "week": 1,
             "day": "Thứ 3",
             "minutes": 60,
             "minutesLabel": "60",
-            "task": "Ch. 32 — non-deadlock bugs: atomicity violation, order violation",
+            "task": "Đọc Ch. 32 — atomicity violation, order violation",
             "doneWhen": "Kể được 2 bug và cách phát hiện"
           },
           {
             "id": "w08-d3",
+            "week": 1,
             "day": "Thứ 4",
             "minutes": 60,
             "minutesLabel": "60",
-            "task": "Ch. 33 — event loop, non-blocking I/O, so với thread-per-connection; glossary \"event-based vs thread-based\"",
-            "doneWhen": "Nêu được 1 ưu và 1 nhược của mỗi mô hình"
+            "task": "Đọc Ch. 33 — event loop, non-blocking I/O, so với thread-per-connection",
+            "doneWhen": "Nêu 1 ưu + 1 nhược mỗi mô hình"
           },
           {
             "id": "w08-d4",
+            "week": 1,
             "day": "Thứ 5",
             "minutes": 60,
             "minutesLabel": "60",
-            "task": "`labs/w08/job_queue.cpp`: queue `std::function<void()>`, N worker cố định, mutex + CV, `shutdown()` sạch",
-            "doneWhen": "Submit 1000 job, chạy xong, không leak thread"
+            "task": "Đọc lại Ch. 29 + Amdahl (phần tuần tự giới hạn speedup)",
+            "doneWhen": "Giải thích được Amdahl bằng ví dụ"
           },
           {
             "id": "w08-d5",
+            "week": 1,
             "day": "Thứ 6",
             "minutes": 60,
             "minutesLabel": "60",
-            "task": "Chia workload: tính tổng mảng lớn thành tasks theo chunk; chạy tuần tự → thread-per-task → pool",
-            "doneWhen": "3 phiên bản ra cùng checksum"
+            "task": "Drill `labs/w08/job_queue.cpp`: queue `std::function<void()>`, N worker, mutex+CV, `shutdown()` sạch",
+            "doneWhen": "1000 job chạy xong, không leak thread"
           },
           {
             "id": "w08-d6",
+            "week": 1,
             "day": "Thứ 7",
             "minutes": 120,
             "minutesLabel": "120",
-            "task": "Đo speedup 1/2/4/8/10 worker (≥5 lần, median); thử chunk quá nhỏ (1 task/10 phần tử) để thấy overhead; tính Amdahl với phần tuần tự",
-            "doneWhen": "Bảng speedup + giải thích điểm gãy"
+            "task": "Lab — chia workload mảng thành tasks; tuần tự → thread-per-task → pool; đo 1/2/4/8/10 worker",
+            "doneWhen": "3 phiên bản cùng checksum + bảng speedup"
           },
           {
             "id": "w08-d7",
+            "week": 1,
             "day": "Chủ nhật",
             "minutes": 120,
             "minutesLabel": "60+60",
-            "task": "Write-up: task granularity, vì sao task quá nhỏ lại chậm hơn; tick tiêu chí",
-            "doneWhen": "3 tiêu chí tuần 8 tick"
+            "task": "Thử chunk quá nhỏ để thấy overhead + write-up + tick tiêu chí",
+            "doneWhen": "Giải thích được vì sao task quá nhỏ lại chậm hơn"
           }
         ],
         "notes": [],
-        "minutesPerWeek": 540
+        "minutesTotal": 540
       }
     },
     {
@@ -1181,66 +1622,137 @@
       "goal": "",
       "plan": {
         "deliverable": "benchmark đọc file 512 MiB + bảng theo buffer size",
+        "calendarWeeks": 2,
         "days": [
           {
             "id": "w09-d1",
+            "week": 1,
             "day": "Thứ 2",
             "minutes": 60,
             "minutesLabel": "60",
-            "task": "Ch. 36 — interrupt vs DMA, driver, độ trễ đĩa/SSD",
+            "task": "Đọc Ch. 36 — interrupt vs DMA, driver, độ trễ thiết bị",
             "doneWhen": "Giải thích được vì sao I/O nhỏ lẻ tốn kém"
           },
           {
             "id": "w09-d2",
+            "week": 1,
             "day": "Thứ 3",
             "minutes": 60,
             "minutesLabel": "60",
-            "task": "Ch. 39 — file descriptor, `open/read/write/lseek/stat`, directory entry, hardlink vs symlink",
-            "doneWhen": "Phân biệt được hardlink và symlink bằng thí nghiệm nhỏ"
+            "task": "Đọc Ch. 39 — file descriptor, `open/read/write/lseek/stat`, directory entry",
+            "doneWhen": "Nêu được fd là gì"
           },
           {
             "id": "w09-d3",
+            "week": 1,
             "day": "Thứ 4",
             "minutes": 60,
             "minutesLabel": "60",
-            "task": "Ch. 40 — inode, block map, buffered I/O và page cache của OS; glossary \"buffered I/O\"",
-            "doneWhen": "Giải thích được vì sao lần đọc thứ 2 nhanh hơn hẳn"
+            "task": "Đọc Ch. 39 phần hardlink vs symlink",
+            "doneWhen": "Phân biệt được bằng thí nghiệm `ln`/`ln -s`"
           },
           {
             "id": "w09-d4",
+            "week": 1,
             "day": "Thứ 5",
             "minutes": 60,
             "minutesLabel": "60",
-            "task": "Tạo dữ liệu test bằng `python3`: file binary 512 MiB (`os.urandom` theo block); viết `labs/w09/read_sizes.cpp` đọc với buffer 4K/64K/1M/16M",
-            "doneWhen": "Có số cho 4 buffer size"
+            "task": "Đọc lại Ch. 36+39, ghi chú \"buffered I/O\"",
+            "doneWhen": "Giải thích được vì sao lần đọc 2 nhanh hơn hẳn"
           },
           {
             "id": "w09-d5",
+            "week": 1,
             "day": "Thứ 6",
             "minutes": 60,
             "minutesLabel": "60",
-            "task": "Thêm đọc kiểu `pread` theo offset ngẫu nhiên (cùng tổng bytes) để so tuần tự vs ngẫu nhiên",
-            "doneWhen": "Có số cho cả 2 kiểu truy cập"
+            "task": "Drill: `labs/w09/gen_data.py` sinh file 512 MiB + `read_sizes.cpp` đọc buffer 64K",
+            "doneWhen": "Đọc đúng checksum"
           },
           {
             "id": "w09-d6",
+            "week": 1,
             "day": "Thứ 7",
             "minutes": 120,
             "minutesLabel": "120",
-            "task": "Chạy ≥5 lần/ cấu hình (median); đo cold vs warm cache (file mới tạo vs file vừa đọc); quan sát `fs_usage -w -f filesys <pid>` và `/usr/bin/time -l`",
-            "doneWhen": "Bảng đầy đủ + ghi rõ điều kiện cache cho từng số"
+            "task": "Lab phần 1 — đo buffer 4K/64K/1M/16M, ≥5 lần median",
+            "doneWhen": "Bảng theo buffer size"
           },
           {
             "id": "w09-d7",
+            "week": 1,
             "day": "Chủ nhật",
             "minutes": 120,
             "minutesLabel": "60+60",
-            "task": "Write-up: overhead của I/O nhỏ, cache ảnh hưởng kết quả thế nào, async I/O khác multithreading ở đâu (đo 1 thread buffer lớn vs 4 thread đọc song song); tick tiêu chí",
-            "doneWhen": "3 tiêu chí tuần 9 tick, mọi số đều ghi kèm điều kiện đo"
+            "task": "Chốt bảng + write-up 5 dòng",
+            "doneWhen": "Bảng có điều kiện đo rõ ràng"
+          },
+          {
+            "id": "w09-d8",
+            "week": 2,
+            "day": "Thứ 2",
+            "minutes": 60,
+            "minutesLabel": "60",
+            "task": "Đọc Ch. 40 — inode, block map, page cache",
+            "doneWhen": "Mô tả được đường đi của 1 lần `read`"
+          },
+          {
+            "id": "w09-d9",
+            "week": 2,
+            "day": "Thứ 3",
+            "minutes": 60,
+            "minutesLabel": "60",
+            "task": "Đọc lại Ch. 40 phần FFS/journaling ở mức khái niệm",
+            "doneWhen": "Nêu được vì sao cần journaling"
+          },
+          {
+            "id": "w09-d10",
+            "week": 2,
+            "day": "Thứ 4",
+            "minutes": 60,
+            "minutesLabel": "60",
+            "task": "Đọc lại + chuẩn bị so tuần tự vs ngẫu nhiên",
+            "doneWhen": "Biết sẽ đo gì"
+          },
+          {
+            "id": "w09-d11",
+            "week": 2,
+            "day": "Thứ 5",
+            "minutes": 60,
+            "minutesLabel": "60",
+            "task": "Tự kiểm tra 5 câu về file system",
+            "doneWhen": "Trả lời được ≥4/5"
+          },
+          {
+            "id": "w09-d12",
+            "week": 2,
+            "day": "Thứ 6",
+            "minutes": 60,
+            "minutesLabel": "60",
+            "task": "Drill: thêm `pread` theo offset ngẫu nhiên vào `read_sizes.cpp`",
+            "doneWhen": "Cùng tổng bytes, khác kiểu truy cập"
+          },
+          {
+            "id": "w09-d13",
+            "week": 2,
+            "day": "Thứ 7",
+            "minutes": 120,
+            "minutesLabel": "120",
+            "task": "Lab phần 2 — so tuần tự vs ngẫu nhiên, cold vs warm cache; `fs_usage -w -f filesys`; `/usr/bin/time -l`",
+            "doneWhen": "Bảng + ghi rõ trạng thái cache từng số"
+          },
+          {
+            "id": "w09-d14",
+            "week": 2,
+            "day": "Chủ nhật",
+            "minutes": 120,
+            "minutesLabel": "60+60",
+            "task": "Write-up (async I/O khác multithreading thế nào) + tick tiêu chí",
+            "doneWhen": "Mọi con số đều ghi kèm điều kiện đo"
           }
         ],
         "notes": [],
-        "minutesPerWeek": 540
+        "minutesTotal": 1080
       }
     },
     {
@@ -1332,66 +1844,76 @@
       "goal": "",
       "plan": {
         "deliverable": "pipeline read → decode → runtime struct, 2 cách đọc, bảng tách I/O vs CPU",
+        "calendarWeeks": 1,
         "days": [
           {
             "id": "w10-d1",
+            "week": 1,
             "day": "Thứ 2",
             "minutes": 60,
             "minutesLabel": "60",
-            "task": "Ôn Ch. 15 + đọc `man mmap`: `MAP_PRIVATE` vs `MAP_SHARED`, `PROT_*`, `msync`, `munmap`",
+            "task": "Ôn Ch. 15 + `man mmap`: `MAP_PRIVATE` vs `MAP_SHARED`, `PROT_*`, `munmap`",
             "doneWhen": "Giải thích được mmap không nạp cả file vào RAM"
           },
           {
             "id": "w10-d2",
+            "week": 1,
             "day": "Thứ 3",
             "minutes": 60,
             "minutesLabel": "60",
-            "task": "Đường đi page fault khi đọc file mmap; so với `read()` copy dữ liệu vào user buffer",
-            "doneWhen": "Nêu được 2 khác biệt bản chất (copy vs map)"
+            "task": "Đọc đường đi page fault khi đọc file mmap; so `read()` (copy) vs `mmap` (map)",
+            "doneWhen": "Nêu 2 khác biệt bản chất"
           },
           {
             "id": "w10-d3",
+            "week": 1,
             "day": "Thứ 4",
             "minutes": 60,
             "minutesLabel": "60",
-            "task": "Thiết kế pipeline cho asset: record cố định (id, pos[3], radius) 1M bản ghi; viết outline + chọn cấu trúc runtime; glossary \"demand paging\"",
-            "doneWhen": "Outline pipeline có 3 giai đoạn rõ ràng"
+            "task": "Thiết kế pipeline asset: record cố định 1M bản ghi; outline 3 giai đoạn",
+            "doneWhen": "Outline có 3 giai đoạn rõ ràng"
           },
           {
             "id": "w10-d4",
+            "week": 1,
             "day": "Thứ 5",
             "minutes": 60,
             "minutesLabel": "60",
-            "task": "Viết `labs/w10/gen_assets.py` sinh file binary ~24 MiB (1M record) + checksum; `labs/w10/read_buffered.cpp` đọc bằng `ifstream` và decode vào `std::vector`",
-            "doneWhen": "Checksum khớp với file sinh ra"
+            "task": "Đọc `man msync` + ghi chú khi nào cần msync/không cần",
+            "doneWhen": "Biết khi nào dữ liệu được ghi xuống đĩa"
           },
           {
             "id": "w10-d5",
+            "week": 1,
             "day": "Thứ 6",
             "minutes": 60,
             "minutesLabel": "60",
-            "task": "`labs/w10/read_mmap.cpp` đọc cùng file bằng `mmap` + decode; đo wall time; đếm page faults bằng `/usr/bin/time -l`",
-            "doneWhen": "Cùng checksum, có số thời gian 3 giai đoạn (read/decode/alloc)"
+            "task": "Drill: `labs/w10/gen_assets.py` sinh file ~24 MiB + checksum; `read_buffered.cpp` đọc bằng `ifstream`",
+            "doneWhen": "Checksum khớp file sinh ra"
           },
           {
             "id": "w10-d6",
+            "week": 1,
             "day": "Thứ 7",
             "minutes": 120,
             "minutesLabel": "120",
-            "task": "Đo ≥5 lần cả 2 cách (median), tách thời gian I/O vs decode; thử đọc mmap nhưng chỉ chạm 1/10 dữ liệu để thấy demand paging",
-            "doneWhen": "Bảng: tổng thời gian, page faults, RSS cho 2 cách"
+            "task": "Lab — `read_mmap.cpp` đọc cùng file bằng `mmap` + decode; đo 3 giai đoạn (read/decode/alloc)",
+            "doneWhen": "Cùng checksum, có số từng giai đoạn"
           },
           {
             "id": "w10-d7",
+            "week": 1,
             "day": "Chủ nhật",
             "minutes": 120,
             "minutesLabel": "60+60",
-            "task": "Write-up: ưu/nhược của mmap vs buffered read cho asset pipeline, vì sao async load vẫn có hitch; tick tiêu chí",
-            "doneWhen": "3 tiêu chí tuần 10 tick"
+            "task": "Đo ≥5 lần cả 2 cách (median), tách I/O vs decode; thử mmap chỉ chạm 1/10 dữ liệu",
+            "doneWhen": "Bảng: thời gian, page faults, RSS"
           }
         ],
-        "notes": [],
-        "minutesPerWeek": 540
+        "notes": [
+          "Nếu dư: thử `madvise(MADV_SEQUENTIAL)` rồi so lại."
+        ],
+        "minutesTotal": 540
       }
     },
     {
@@ -1462,69 +1984,75 @@
       "project": "",
       "goal": "",
       "plan": {
-        "deliverable": "1 harness đo thống nhất + 1 báo cáo tối ưu trước/sau",
+        "deliverable": "1 harness đo dùng chung + 1 báo cáo tối ưu trước/sau",
+        "calendarWeeks": 1,
         "days": [
           {
             "id": "w11-d1",
+            "week": 1,
             "day": "Thứ 2",
             "minutes": 60,
             "minutesLabel": "60",
-            "task": "Lý thuyết: wall-clock vs CPU time vs throughput; sampling profiler vs instrumentation; flame graph",
-            "doneWhen": "Phân biệt được 3 loại số đo và khi nào dùng cái nào"
+            "task": "Lý thuyết: wall-clock vs CPU time vs throughput; sampling vs instrumentation",
+            "doneWhen": "Phân biệt 3 loại số đo và khi nào dùng"
           },
           {
             "id": "w11-d2",
+            "week": 1,
             "day": "Thứ 3",
             "minutes": 60,
             "minutesLabel": "60",
-            "task": "Đọc `man sample`, chạy thử `sample <pid> 2 -file /tmp/s.txt` trên 1 chương trình tuần 8",
-            "doneWhen": "Đọc được output, chỉ ra được hàm chiếm nhiều sample nhất"
+            "task": "Đọc `man sample`, chạy thử trên 1 chương trình của module 8",
+            "doneWhen": "Đọc được output, chỉ ra hàm nhiều sample nhất"
           },
           {
             "id": "w11-d3",
+            "week": 1,
             "day": "Thứ 4",
             "minutes": 60,
             "minutesLabel": "60",
-            "task": "Viết `labs/bench/bench.hpp` dùng chung: timer, warm-up, N lần, median, in CSV; port lại benchmark tuần 4/5/8 sang harness này",
-            "doneWhen": "1 lệnh chạy ra bảng CSV cho ≥3 benchmark"
+            "task": "Đọc lại ý nghĩa page faults / context switches trong `/usr/bin/time -l`",
+            "doneWhen": "Biết chỉ số nào phản ánh vấn đề gì"
           },
           {
             "id": "w11-d4",
+            "week": 1,
             "day": "Thứ 5",
             "minutes": 60,
             "minutesLabel": "60",
-            "task": "`sample` trên benchmark tuần 4 (AoS vs SoA) → xác định hotspot thật",
-            "doneWhen": "Ghi được hotspot + giả thuyết nguyên nhân"
+            "task": "Viết `labs/bench/bench.hpp`: timer, warm-up, N lần, median, CSV",
+            "doneWhen": "1 lệnh chạy ra CSV cho ≥3 benchmark cũ"
           },
           {
             "id": "w11-d5",
+            "week": 1,
             "day": "Thứ 6",
             "minutes": 60,
             "minutesLabel": "60",
-            "task": "`sample` trên job system tuần 8 → chỗ contention/spin; `/usr/bin/time -l` cho context switches",
-            "doneWhen": "Chỉ ra được 1 bottleneck có bằng chứng"
+            "task": "Drill: `sample` trên benchmark module 4 (AoS vs SoA)",
+            "doneWhen": "Ghi được hotspot + giả thuyết"
           },
           {
             "id": "w11-d6",
+            "week": 1,
             "day": "Thứ 7",
             "minutes": 120,
             "minutesLabel": "120",
-            "task": "Tối ưu **một** chỗ dựa trên bằng chứng (ví dụ SoA + chunk size lớn hơn, hoặc bỏ allocation trong loop), đo lại ≥5 lần cùng dữ liệu",
-            "doneWhen": "Có before/after với chênh lệch rõ ràng hơn nhiễu"
+            "task": "Lab — tối ưu **một** chỗ dựa trên bằng chứng (SoA/chunk size/bỏ alloc trong loop), đo lại ≥5 lần",
+            "doneWhen": "Có before/after chênh lệch hơn nhiễu"
           },
           {
             "id": "w11-d7",
+            "week": 1,
             "day": "Chủ nhật",
             "minutes": 120,
             "minutesLabel": "60+60",
-            "task": "Viết báo cáo ngắn: bottleneck, bằng chứng (số sample), before/after, giới hạn; tick tiêu chí",
-            "doneWhen": "Tách được \"số liệu đo\" và \"giả thuyết nguyên nhân\" trong báo cáo"
+            "task": "Viết báo cáo ngắn (bottleneck, bằng chứng, before/after, giới hạn) + tick tiêu chí",
+            "doneWhen": "Tách được số liệu đo và giả thuyết"
           }
         ],
-        "notes": [
-          "Nếu có full Xcode: thay `sample` bằng Instruments Time Profiler + Allocations và đối chiếu 2 công cụ."
-        ],
-        "minutesPerWeek": 540
+        "notes": [],
+        "minutesTotal": 540
       }
     },
     {
@@ -1580,25 +2108,29 @@
       "goal": "Mô phỏng một phần công việc CPU trước khi render. Chương trình xử lý dữ liệu của nhiều object, tính toán transform hoặc visibility đơn giản, rồi tạo danh sách object cần render",
       "plan": {
         "deliverable": "`labs/final/` + báo cáo `notes/w12-report.md`",
+        "calendarWeeks": 2,
         "days": [
           {
             "id": "w12-d1",
+            "week": 1,
             "day": "Thứ 2",
             "minutes": 60,
             "minutesLabel": "60",
-            "task": "Thiết kế: 1M object (pos, radius, flags), camera/frustum đơn giản (hộp AABB), output danh sách visible; viết `README` mục tiêu + interface + cách đo",
-            "doneWhen": "Có khung interface + tiêu chí benchmark viết ra giấy"
+            "task": "Thiết kế: 1M object (pos, radius, flags), frustum AABB đơn giản, output visible list; viết README project",
+            "doneWhen": "Có interface + cách đo viết ra giấy"
           },
           {
             "id": "w12-d2",
+            "week": 1,
             "day": "Thứ 3",
             "minutes": 60,
             "minutesLabel": "60",
-            "task": "Implement AoS single-thread baseline (culling đơn giản) + sinh dữ liệu seed cố định + checksum kết quả",
-            "doneWhen": "Baseline chạy được, in checksum + thời gian"
+            "task": "Implement AoS single-thread baseline + sinh dữ liệu seed cố định + checksum",
+            "doneWhen": "Baseline chạy, in checksum + thời gian"
           },
           {
             "id": "w12-d3",
+            "week": 1,
             "day": "Thứ 4",
             "minutes": 60,
             "minutesLabel": "60",
@@ -1607,39 +2139,106 @@
           },
           {
             "id": "w12-d4",
+            "week": 1,
             "day": "Thứ 5",
             "minutes": 60,
             "minutesLabel": "60",
-            "task": "Worker pool cho AoS: chia chunk theo index, không cấp phát trong vòng lặp nóng (buffer output cấp phát trước)",
-            "doneWhen": "Kết quả đúng, không alloc trong hot loop (kiểm bằng `heap`/exit stats)"
+            "task": "Đọc lại module 4 + 8, ghi chú lựa chọn thiết kế cho bản song song",
+            "doneWhen": "Nêu được sẽ chia chunk thế nào"
           },
           {
             "id": "w12-d5",
+            "week": 1,
             "day": "Thứ 6",
             "minutes": 60,
             "minutesLabel": "60",
-            "task": "SoA + pool; rà lại correctness (so checksum), sửa lỗi dữ liệu chia không đều",
-            "doneWhen": "4 phiên bản cho cùng checksum"
+            "task": "Drill: worker pool cho AoS (chunk theo index, buffer output cấp phát trước)",
+            "doneWhen": "Kết quả đúng, không alloc trong hot loop"
           },
           {
             "id": "w12-d6",
+            "week": 1,
             "day": "Thứ 7",
             "minutes": 120,
             "minutesLabel": "120",
-            "task": "Benchmark matrix: {AoS, SoA} × {1, 2, 4, 8, 10} worker × ≥5 lần → median, độ biến thiên; lưu CSV",
-            "doneWhen": "Bảng đầy đủ + CSV trong `labs/final/results/`"
+            "task": "Lab phần 1 — SoA + pool; rà correctness (checksum), sửa chia chunk không đều",
+            "doneWhen": "4 phiên bản cùng checksum"
           },
           {
             "id": "w12-d7",
+            "week": 1,
             "day": "Chủ nhật",
             "minutes": 120,
             "minutesLabel": "60+60",
-            "task": "Viết báo cáo: bottleneck, tác động memory locality vs threading, giới hạn (không đo GPU, không phải renderer thật), liên hệ Unity/ECS; tick toàn bộ tiêu chí; Export JSON + commit",
-            "doneWhen": "4 tiêu chí tuần 12 tick + báo cáo đọc lại thấy rõ ràng"
+            "task": "Chạy matrix nhỏ (AoS/SoA × 1/4 thread) để chắc harness đúng",
+            "doneWhen": "Số liệu hợp lý, không outlier lạ"
+          },
+          {
+            "id": "w12-d8",
+            "week": 2,
+            "day": "Thứ 2",
+            "minutes": 60,
+            "minutesLabel": "60",
+            "task": "Đọc lại kết quả, chọn 1 giả thuyết cần chứng minh",
+            "doneWhen": "Có 1 giả thuyết rõ ràng"
+          },
+          {
+            "id": "w12-d9",
+            "week": 2,
+            "day": "Thứ 3",
+            "minutes": 60,
+            "minutesLabel": "60",
+            "task": "Tối ưu theo giả thuyết (layout/chunk/alloc) và đo lại",
+            "doneWhen": "Có before/after"
+          },
+          {
+            "id": "w12-d10",
+            "week": 2,
+            "day": "Thứ 4",
+            "minutes": 60,
+            "minutesLabel": "60",
+            "task": "Chạy matrix đầy đủ: {AoS, SoA} × {1,2,4,8,10} × ≥5 lần",
+            "doneWhen": "CSV trong `labs/final/results/`"
+          },
+          {
+            "id": "w12-d11",
+            "week": 2,
+            "day": "Thứ 5",
+            "minutes": 60,
+            "minutesLabel": "60",
+            "task": "Kiểm tra lại correctness sau tối ưu + đọc lại số liệu",
+            "doneWhen": "Checksum không đổi"
+          },
+          {
+            "id": "w12-d12",
+            "week": 2,
+            "day": "Thứ 6",
+            "minutes": 60,
+            "minutesLabel": "60",
+            "task": "Viết phần \"kết quả\" của báo cáo (bảng + biểu đồ nếu có)",
+            "doneWhen": "Bảng số có median + độ biến thiên"
+          },
+          {
+            "id": "w12-d13",
+            "week": 2,
+            "day": "Thứ 7",
+            "minutes": 120,
+            "minutesLabel": "120",
+            "task": "Viết phần \"bottleneck + giới hạn\" + liên hệ Unity/ECS",
+            "doneWhen": "Báo cáo nói rõ cái gì đo được, cái gì không"
+          },
+          {
+            "id": "w12-d14",
+            "week": 2,
+            "day": "Chủ nhật",
+            "minutes": 120,
+            "minutesLabel": "60+60",
+            "task": "Rà báo cáo, tick toàn bộ tiêu chí module, Export JSON + commit",
+            "doneWhen": "4 tiêu chí tick + báo cáo đọc lại thấy rõ"
           }
         ],
         "notes": [],
-        "minutesPerWeek": 540
+        "minutesTotal": 1080
       }
     }
   ],
